@@ -9,60 +9,28 @@ Overloaded methods are included just in case the user has come with a party of m
 public class Order {
 
     // Instantiate class variables
-    private List<Ramen> ramenList;
-    private List<Appetizer> appetizersList;
-    private List<Drink> drinksList;
+    private List<MenuItem> orderList;
 
     // Constructor initializes each array list
     public Order() {
-        ramenList = new ArrayList<>();
-        appetizersList = new ArrayList<>();
-        drinksList = new ArrayList<>();
+        orderList = new ArrayList<>();
     }
 
-    /* Add methods that do not use a list type append the type(ramen,appetizer,drink) to the end of each
-    of their respective lists
-     */
-    public void addRamen(Ramen ramen) {
-        ramenList.add(ramen);
+    // Method adds a menu item to the orderList arraylist
+    public void addMenuItem(MenuItem menuItem) {
+        orderList.add(menuItem);
     }
 
-    public void addAppetizers(Appetizer appetizer) {
-        appetizersList.add(appetizer);
-    }
-
-    public void addDrinks(Drink drink) {
-        drinksList.add(drink);
-    }
-
-    /* These list add methods use the built-in method addAll to add bulk orders to
-    each order list
-     */
-    public void addRamen(List<Ramen> ramenList) {
-        this.ramenList.addAll(ramenList);
-    }
-
-    public void addAppetizers(List<Appetizer> appetizers) {
-        this.appetizersList.addAll(appetizers);
-    }
-
-    public void addDrinks(List<Drink> drinks) {
-        this.drinksList.addAll(drinks);
+    // Method adds multiple items from a list of menu items to the orderList
+    public void addMenuItem(List<MenuItem> menuItems) {
+        orderList.addAll(menuItems);
     }
 
     public BigDecimal getOrderTotal(BigDecimal tip) {
         BigDecimal orderTotal = BigDecimal.ZERO;
 
-        for(Ramen r: ramenList) {
-            orderTotal = orderTotal.add(r.getPrice());
-        }
-
-        for(Appetizer a: appetizersList) {
-            orderTotal = orderTotal.add(a.getPrice());
-        }
-
-        for(Drink d: drinksList) {
-            orderTotal = orderTotal.add(d.getPrice());
+        for(MenuItem mI: orderList) {
+            orderTotal = orderTotal.add(mI.getPrice());
         }
 
         return orderTotal.multiply(BigDecimal.valueOf(1.07).add(tip));
