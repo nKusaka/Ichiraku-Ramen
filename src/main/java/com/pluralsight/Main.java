@@ -4,6 +4,6 @@ import com.myutilities.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Utilities.loadingBar("Hi");
+        Utilities.loadingBar();
     }
 }
