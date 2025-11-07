@@ -1,5 +1,7 @@
 package com.pluralsight;
+
 import java.math.*;
+import java.time.*;
 import java.util.*;
 
 /* This class creates the ramen item for the menu which gives the user many different options to
@@ -8,7 +10,7 @@ List of ramens: (Tonkotsu, Red Garlic Tonkotsu, Black Garlic Tonkotsu, Miso Tonk
 List of toppings: (Extra noodles, Chashu, Soft boiled egg, Whole fried garlic, Bamboo shoots)
  */
 
-public class Ramen extends MenuItem {
+public class Ramen extends MenuItem implements Discountable {
 
     // Instantiate class variables
     BigDecimal ramenPrice;
@@ -22,19 +24,19 @@ public class Ramen extends MenuItem {
         toppingsList = new ArrayList<>();
         toppingsPrice = BigDecimal.ZERO;
 
-        if(ramenType.toLowerCase().trim().contains("tonkotsu")) {
+        if (ramenType.toLowerCase().trim().contains("tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(12);
         }
 
-        if(ramenType.toLowerCase().trim().contains("red garlic tonkotsu")) {
+        if (ramenType.toLowerCase().trim().contains("red garlic tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(14);
         }
 
-        if(ramenType.toLowerCase().trim().contains("black garlic tonkotsu")) {
+        if (ramenType.toLowerCase().trim().contains("black garlic tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(16);
         }
 
-        if(ramenType.toLowerCase().trim().contains("miso tonkotsu")) {
+        if (ramenType.toLowerCase().trim().contains("miso tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(12);
         }
     }
@@ -70,8 +72,8 @@ public class Ramen extends MenuItem {
 
     // Overloaded method to add multiple toppings to the list at the same time instead of 1 by 1
     public void addToppings(List<Integer> multipleToppings) {
-        for(Integer t: multipleToppings) {
-            switch(t) {
+        for (Integer t : multipleToppings) {
+            switch (t) {
                 case 1:
                     toppingsList.add("extra noodles");
                     toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
@@ -98,8 +100,19 @@ public class Ramen extends MenuItem {
         }
     }
 
-    // Gets the value of the ramen with the added toppings if any
+    @Override
+    public BigDecimal applyDiscount(BigDecimal total) {
+        return total.multiply(BigDecimal.valueOf(0.5));
+    }
+
+    // Gets the value of the ramen with the added toppings if any and also applies a 50% discount if it is Friday
     public BigDecimal getPrice() {
-        return price.add(toppingsPrice).add(ramenPrice);
+
+        LocalDate today = LocalDate.now();
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            return applyDiscount(price.add(toppingsPrice).add(ramenPrice));
+        } else {
+            return price.add(toppingsPrice).add(ramenPrice);
+        }
     }
 }

@@ -1,4 +1,5 @@
 package com.pluralsight;
+
 import java.math.*;
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class Order {
     public BigDecimal getOrderTotal(BigDecimal tip) {
         BigDecimal orderTotal = BigDecimal.ZERO;
 
-        for(MenuItem mI: orderList) {
+        for (MenuItem mI : orderList) {
             orderTotal = orderTotal.add(mI.getPrice());
         }
 

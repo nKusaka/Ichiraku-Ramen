@@ -1,4 +1,5 @@
 package com.pluralsight;
+
 import java.math.*;
 
 public class Drink extends MenuItem {
@@ -11,15 +12,11 @@ public class Drink extends MenuItem {
     public Drink(String drinkType) {
         super(drinkType);
 
-        if(drinkType.trim().equalsIgnoreCase("sake")) {
+        if (drinkType.trim().equalsIgnoreCase("sake")) {
             price = BigDecimal.valueOf(8);
-        }
-
-        else if(drinkType.trim().equalsIgnoreCase("green tea")) {
+        } else if (drinkType.trim().equalsIgnoreCase("green tea")) {
             price = BigDecimal.valueOf(2);
-        }
-
-        else {
+        } else {
             price = BigDecimal.valueOf(3);
         }
     }
