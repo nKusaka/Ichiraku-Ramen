@@ -1,7 +1,6 @@
 package com.pluralsight;
 import java.math.*;
 import java.util.*;
-import java.util.stream.*;
 
 /* This class creates the ramen item for the menu which gives the user many different options to
 customize their ramen as well as being able to select the type of ramen they would like
@@ -9,21 +8,18 @@ List of ramens: (Tonkotsu, Red Garlic Tonkotsu, Black Garlic Tonkotsu, Miso Tonk
 List of toppings: (Extra noodles, Chashu, Soft boiled egg, Whole fried garlic, Bamboo shoots)
  */
 
-public class Ramen {
+public class Ramen extends MenuItem {
 
     // Instantiate class variables
-    String ramenType;
     BigDecimal ramenPrice;
-    BigDecimal total;
     List<String> toppingsList;
     BigDecimal toppingsPrice;
 
     // Constructor takes a string parameter for the type of ramen and then based on the
     // type of ramen sets the price
     public Ramen(String ramenType) {
-        this.ramenType = ramenType;
+        super(ramenType);
         toppingsList = new ArrayList<>();
-        total = BigDecimal.ZERO;
         toppingsPrice = BigDecimal.ZERO;
 
         if(ramenType.toLowerCase().trim().contains("tonkotsu")) {
@@ -104,6 +100,6 @@ public class Ramen {
 
     // Gets the value of the ramen with the added toppings if any
     public BigDecimal getPrice() {
-        return total.add(toppingsPrice).add(ramenPrice);
+        return price.add(toppingsPrice).add(ramenPrice);
     }
 }

@@ -1,16 +1,11 @@
 package com.pluralsight;
 import java.math.*;
 
-public class Appetizer {
-
-    // Instantiate class variables
-    String appetizerType;
-    BigDecimal price;
+public class Appetizer extends MenuItem {
 
     // Constructor takes in the type of appetizer i.e. the name and then depending on the name sets the price of the app
     public Appetizer(String appetizerType) {
-        this.appetizerType = appetizerType;
-        price = BigDecimal.ZERO;
+        super(appetizerType);
 
         if(appetizerType.trim().equalsIgnoreCase("gyoza")) {
             price = BigDecimal.valueOf(8);

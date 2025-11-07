@@ -1,16 +1,15 @@
 package com.pluralsight;
 import java.math.*;
 
-public class Drink {
+public class Drink extends MenuItem {
 
     // Instantiate class variables
-    String drinkType;
+    String name;
     BigDecimal price;
 
     // Constructor takes in a name for the drink and then depending on the name sets the price for the drink
     public Drink(String drinkType) {
-        this.drinkType = drinkType;
-        price = BigDecimal.ZERO;
+        super(drinkType);
 
         if(drinkType.trim().equalsIgnoreCase("sake")) {
             price = BigDecimal.valueOf(8);
