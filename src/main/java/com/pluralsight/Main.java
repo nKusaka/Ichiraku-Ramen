@@ -4,6 +4,7 @@ import com.myutilities.*;
 
 public class Main {
     public static void main(String[] args) {
-        Utilities.loadingBar();
+        UserInterface ui = new UserInterface();
+        ui.welcomeScreen();
     }
 }
