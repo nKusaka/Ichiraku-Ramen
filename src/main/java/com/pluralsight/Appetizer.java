@@ -1,4 +1,43 @@
 package com.pluralsight;
+import java.math.*;
 
 public class Appetizer {
+
+    // Instantiate class variables
+    String appetizerType;
+    BigDecimal price;
+
+    // Constructor takes in the type of appetizer i.e. the name and then depending on the name sets the price of the app
+    public Appetizer(String appetizerType) {
+        this.appetizerType = appetizerType;
+        price = BigDecimal.ZERO;
+
+        if(appetizerType.trim().equalsIgnoreCase("gyoza")) {
+            price = BigDecimal.valueOf(8);
+        }
+
+        if(appetizerType.trim().equalsIgnoreCase("takoyaki")) {
+            price = BigDecimal.valueOf(10);
+        }
+
+        if(appetizerType.trim().equalsIgnoreCase("edamame")) {
+            price = BigDecimal.valueOf(6);
+        }
+
+        if(appetizerType.trim().equalsIgnoreCase("wakame salad")) {
+            price = BigDecimal.valueOf(5.50);
+        }
+
+        if(appetizerType.equalsIgnoreCase("squid karaage")) {
+            price = BigDecimal.valueOf(12);
+        }
+
+        if(appetizerType.equalsIgnoreCase("chicken karaage")) {
+            price = BigDecimal.valueOf(7);
+        }
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
 }

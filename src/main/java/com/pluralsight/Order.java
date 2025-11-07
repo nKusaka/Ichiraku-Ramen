@@ -1,4 +1,5 @@
 package com.pluralsight;
+import java.math.*;
 import java.util.*;
 
 /* This class creates the order for the user using array lists to contain each type of item
@@ -47,5 +48,23 @@ public class Order {
 
     public void addDrinks(List<Drink> drinks) {
         this.drinksList.addAll(drinks);
+    }
+
+    public BigDecimal getOrderTotal(BigDecimal tip) {
+        BigDecimal orderTotal = BigDecimal.ZERO;
+
+        for(Ramen r: ramenList) {
+            orderTotal = orderTotal.add(r.getPrice());
+        }
+
+        for(Appetizer a: appetizersList) {
+            orderTotal = orderTotal.add(a.getPrice());
+        }
+
+        for(Drink d: drinksList) {
+            orderTotal = orderTotal.add(d.getPrice());
+        }
+
+        return orderTotal.multiply(BigDecimal.valueOf(1.07).add(tip));
     }
 }

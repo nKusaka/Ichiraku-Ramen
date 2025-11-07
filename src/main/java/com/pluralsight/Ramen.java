@@ -26,20 +26,20 @@ public class Ramen {
         total = BigDecimal.ZERO;
         toppingsPrice = BigDecimal.ZERO;
 
-        if(ramenType.toLowerCase().contains("tonkotsu")) {
-            ramenPrice = BigDecimal.valueOf(12.00);
+        if(ramenType.toLowerCase().trim().contains("tonkotsu")) {
+            ramenPrice = BigDecimal.valueOf(12);
         }
 
-        if(ramenType.toLowerCase().contains("red garlic tonkotsu")) {
-            ramenPrice = BigDecimal.valueOf(14.00);
+        if(ramenType.toLowerCase().trim().contains("red garlic tonkotsu")) {
+            ramenPrice = BigDecimal.valueOf(14);
         }
 
-        if(ramenType.toLowerCase().contains("black garlic tonkotsu")) {
-            ramenPrice = BigDecimal.valueOf(16.00);
+        if(ramenType.toLowerCase().trim().contains("black garlic tonkotsu")) {
+            ramenPrice = BigDecimal.valueOf(16);
         }
 
-        if(ramenType.toLowerCase().contains("miso tonkotsu")) {
-            ramenPrice = BigDecimal.valueOf(12.00);
+        if(ramenType.toLowerCase().trim().contains("miso tonkotsu")) {
+            ramenPrice = BigDecimal.valueOf(12);
         }
     }
 
