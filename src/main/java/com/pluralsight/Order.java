@@ -6,10 +6,13 @@ Ramen,Appetizer,Drink
 Overloaded methods are included just in case the user has come with a party of more than 1 person
  */
 public class Order {
+
+    // Instantiate class variables
     private List<Ramen> ramenList;
     private List<Appetizer> appetizersList;
     private List<Drink> drinksList;
 
+    // Constructor initializes each array list
     public Order() {
         ramenList = new ArrayList<>();
         appetizersList = new ArrayList<>();
