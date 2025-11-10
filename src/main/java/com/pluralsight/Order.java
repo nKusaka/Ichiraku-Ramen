@@ -22,6 +22,16 @@ public class Order {
         orderList.add(menuItem);
     }
 
+    // Method will get the first item in the list and return it
+    public MenuItem getFirst() {
+        return orderList.get(0);
+    }
+
+    // Method will get the last item in the list and return it
+    public MenuItem getLast() {
+        return orderList.get(orderList.size() - 1);
+    }
+
     // Method adds multiple items from a list of menu items to the orderList
     public void addMenuItem(List<MenuItem> menuItems) {
         orderList.addAll(menuItems);

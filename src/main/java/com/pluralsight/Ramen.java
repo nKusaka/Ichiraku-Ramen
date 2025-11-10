@@ -136,4 +136,20 @@ public class Ramen extends MenuItem implements Discountable {
             return price.add(toppingsPrice).add(ramenPrice);
         }
     }
+
+    public List<String> getToppingsList() {
+        return toppingsList;
+    }
+
+    public void setToppingsList(List<String> toppingsList) {
+        this.toppingsList = toppingsList;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 }
