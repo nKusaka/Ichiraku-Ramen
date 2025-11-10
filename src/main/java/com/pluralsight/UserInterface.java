@@ -53,7 +53,7 @@ public class UserInterface {
                                   1. Order Ramen
                                   2. Order Appetizers
                                   3. Order Drinks
-                                  4. Get Receipt
+                                  4. Finished Ordering
                                   5. Cancel Order
                     ===============================================\n""");
 
@@ -86,10 +86,7 @@ public class UserInterface {
                     break;
             }
         }
-            if (!items.isEmpty() && !receiptPrinted) {
-                loadingTime();
-                getReceipt();
-            }
+
         items.clear();
     }
 
@@ -214,7 +211,16 @@ public class UserInterface {
     }
 
     private void orderAppetizer() {
-
+        System.out.printf("""
+                =======================================
+                Select An Appetizer
+                1. Gyoza 6 Pieces
+                2. Takoyaki 8 Pieces
+                3. Edamame
+                4. Wakame Salad
+                5. Squid Karaage
+                6. Chicken Karaage
+                =======================================""");
     }
 
     private void orderDrink() {
