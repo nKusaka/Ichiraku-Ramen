@@ -210,17 +210,62 @@ public class UserInterface {
         System.out.println("Your ramen has been added to your order");
     }
 
+    // Method creates an appetizer object to be passed into the order list later on
+    // Users can order as many appetizers as they would like and finish ordering by pressing 7
     private void orderAppetizer() {
-        System.out.printf("""
-                =======================================
-                Select An Appetizer
-                1. Gyoza 6 Pieces
-                2. Takoyaki 8 Pieces
-                3. Edamame
-                4. Wakame Salad
-                5. Squid Karaage
-                6. Chicken Karaage
-                =======================================""");
+
+        userInput = "";
+        while (!userInput.equals("7")) {
+            System.out.printf("""
+                    ==========================================
+                    Select An Appetizer
+                    1. Gyoza 6 Pieces               $8.00
+                    2. Takoyaki 8 Pieces            $10.00
+                    3. Edamame                      $6.00
+                    4. Wakame Salad                 $5.50
+                    5. Squid Karaage                $12.00
+                    6. Chicken Karaage              $7.00
+                    7. Exit Appetizer List
+                    ==========================================\n""");
+
+            userInput = read.nextLine();
+
+            while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")
+            && !userInput.equals("5") && !userInput.equals("6") && !userInput.equals("7")) {
+                System.out.printf("Please enter a valid number");
+                userInput = read.nextLine();
+            }
+
+            switch (userInput) {
+                case "1":
+                    items.add(new Appetizer("gyoza"));
+                    System.out.println("Gyoza has been added to your order");
+                    break;
+                case "2":
+                    items.add(new Appetizer("takoyaki"));
+                    System.out.println("Takoyaki has been added to your order");
+                    break;
+                case "3":
+                    items.add(new Appetizer("edamame"));
+                    System.out.println("Edamame has been added to your order");
+                    break;
+                case "4":
+                    items.add(new Appetizer("wakame salad"));
+                    System.out.println("Wakame Salad has been added to your order");
+                    break;
+                case "5":
+                    items.add(new Appetizer("squid karaage"));
+                    System.out.println("Squid Karaage has been added to your order");
+                    break;
+                case "6":
+                    items.add(new Appetizer("chicken karaage"));
+                    System.out.println("Chicken Karaage has been added to your order");
+                    break;
+                default:
+                    break;
+            }
+            orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+        }
     }
 
     private void orderDrink() {
