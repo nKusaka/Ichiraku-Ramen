@@ -1,5 +1,4 @@
 package com.pluralsight;
-
 import java.math.*;
 import java.time.*;
 import java.util.*;
@@ -13,9 +12,10 @@ List of toppings: (Extra noodles, Chashu, Soft boiled egg, Whole fried garlic, B
 public class Ramen extends MenuItem implements Discountable {
 
     // Instantiate class variables
-    BigDecimal ramenPrice;
-    List<String> toppingsList;
-    BigDecimal toppingsPrice;
+    private BigDecimal ramenPrice;
+    private List<String> toppingsList;
+    private BigDecimal toppingsPrice;
+    private String size;
 
     // Constructor takes a string parameter for the type of ramen and then based on the
     // type of ramen sets the price
@@ -23,6 +23,7 @@ public class Ramen extends MenuItem implements Discountable {
         super(ramenType);
         toppingsList = new ArrayList<>();
         toppingsPrice = BigDecimal.ZERO;
+        size = "small";
 
         if (ramenType.toLowerCase().trim().contains("tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(12);
@@ -38,6 +39,26 @@ public class Ramen extends MenuItem implements Discountable {
 
         if (ramenType.toLowerCase().trim().contains("miso tonkotsu")) {
             ramenPrice = BigDecimal.valueOf(12);
+        }
+    }
+
+    // Method selects the size of the ramen bowl and calculates the price
+    public void addRamenSize(Integer sizeChoice) {
+        switch (sizeChoice) {
+            case 1:
+                size = "small";
+                ramenPrice = ramenPrice.add(BigDecimal.valueOf(2));
+                break;
+            case 2:
+                size = "medium";
+                ramenPrice = ramenPrice.add(BigDecimal.valueOf(3));
+                break;
+            case 4:
+                size = "large";
+                ramenPrice = ramenPrice.add(BigDecimal.valueOf(4));
+                break;
+            default:
+                break;
         }
     }
 
