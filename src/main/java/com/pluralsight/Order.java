@@ -37,13 +37,21 @@ public class Order {
         orderList.addAll(menuItems);
     }
 
-    public BigDecimal getOrderTotal(BigDecimal tip) {
+    public BigDecimal getOrderTotal() {
         BigDecimal orderTotal = BigDecimal.ZERO;
 
         for (MenuItem mI : orderList) {
             orderTotal = orderTotal.add(mI.getPrice());
         }
 
-        return orderTotal.multiply(BigDecimal.valueOf(1.07).add(tip));
+        return orderTotal.multiply(BigDecimal.valueOf(1.07));
+    }
+
+    public List<MenuItem> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<MenuItem> orderList) {
+        this.orderList = orderList;
     }
 }
