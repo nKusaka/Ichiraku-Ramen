@@ -14,7 +14,8 @@ public class UserInterface {
     public void welcomeScreen() {
 
         while (!userInput.equals("2")) {
-            System.out.printf("""
+
+            userInput = getValidatedInput("""
                     ============================================
                     
                               🍜Welcome to Ichiraku!!🍜
@@ -22,14 +23,8 @@ public class UserInterface {
                                 1. New Order
                                 2. Exit
                     
-                    ============================================\n""");
+                    ============================================\n""","1","2");
 
-            userInput = read.nextLine();
-
-            while (!userInput.equals("1") && !userInput.equals("2")) {
-                System.out.printf("Invalid input try again");
-                userInput = read.nextLine();
-            }
             if (userInput.equals("1")) {
                 orders = new ArrayList<>();
                 orders.add(new Order());
@@ -47,7 +42,8 @@ public class UserInterface {
         boolean receiptPrinted = false;
         userInput = "";
         while (!userInput.equals("5") && !userInput.equals("4")) {
-            System.out.printf("""
+
+            userInput = getValidatedInput("""
                     ===============================================
                             Enter One Of The Numbers Below
                                   1. Order Ramen
@@ -55,14 +51,7 @@ public class UserInterface {
                                   3. Order Drinks
                                   4. Finished Ordering
                                   5. Cancel Order
-                    ===============================================\n""");
-
-            userInput = read.nextLine();
-
-            while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4") && !userInput.equals("5")) {
-                System.out.printf("Please enter a valid number");
-                userInput = read.nextLine();
-            }
+                    ===============================================\n""", "1","2","3","4","5");
 
             switch (userInput) {
                 case "1":
@@ -93,21 +82,15 @@ public class UserInterface {
     // Method creates a Ramen object to be passed into the order list later on
     // Users can customize their ramen by type, bowl size, and toppings if they would like
     private void orderRamen() {
-        System.out.printf("""
+
+        userInput = getValidatedInput("""
                 ================================================
                         Select A Type Of Ramen
                         1. Tonkotsu Ramen                $12.00
                         2. Red Garlic Tonkotsu Ramen     $14.00
                         3. Black Garlic Tonkotsu Ramen   $16.00
                         4. Miso Tonkotsu Ramen           $12.00
-                ================================================\n""");
-
-        userInput = read.nextLine();
-
-        while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")) {
-            System.out.printf("Please enter a valid number");
-            userInput = read.nextLine();
-        }
+                ================================================\n""", "1", "2", "3", "4");
 
         switch (userInput) {
             case "1":
@@ -130,19 +113,13 @@ public class UserInterface {
                 break;
         }
 
-        System.out.printf("""
+        userInput = getValidatedInput("""
                 ========================================
                             Select A Bowl Size
                                 1. Small        +$2.00
                                 2. Medium       +$3.00
                                 3. Large        +$4.00
-                =========================================\n""");
-
-        userInput = read.nextLine();
-        while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3")) {
-            System.out.printf("Please enter a valid number");
-            userInput = read.nextLine();
-        }
+                =========================================\n""", "1", "2", "3");
 
         if (items.get(items.size() - 1) instanceof Ramen) {
             switch (userInput) {
@@ -164,7 +141,7 @@ public class UserInterface {
         }
 
         while (!userInput.equals("6")) {
-            System.out.printf("""
+            userInput = getValidatedInput("""
                     ==============================================
                                Select Toppings
                                1. Extra Noodles            +$4.00
@@ -173,13 +150,7 @@ public class UserInterface {
                                4. Whole Fried Garlic       +$2.50
                                5. Bamboo Shoots            +$3.00
                                6. Exit Toppings List
-                    ==============================================\n""");
-
-            userInput = read.nextLine();
-            while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4") && !userInput.equals("5") && !userInput.equals("6")) {
-                System.out.printf("Please enter a valid number");
-                userInput = read.nextLine();
-            }
+                    ==============================================\n""", "1", "2", "3", "4", "5", "6");
 
             if (items.get(items.size() - 1) instanceof Ramen) {
                 switch (userInput) {
@@ -216,9 +187,10 @@ public class UserInterface {
 
         userInput = "";
         while (!userInput.equals("7")) {
-            System.out.printf("""
+            userInput = getValidatedInput("""
                     ==========================================
                     Select An Appetizer
+                    
                     1. Gyoza 6 Pieces               $8.00
                     2. Takoyaki 8 Pieces            $10.00
                     3. Edamame                      $6.00
@@ -226,15 +198,7 @@ public class UserInterface {
                     5. Squid Karaage                $12.00
                     6. Chicken Karaage              $7.00
                     7. Exit Appetizer List
-                    ==========================================\n""");
-
-            userInput = read.nextLine();
-
-            while (!userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")
-            && !userInput.equals("5") && !userInput.equals("6") && !userInput.equals("7")) {
-                System.out.printf("Please enter a valid number");
-                userInput = read.nextLine();
-            }
+                    ==========================================\n""", "1", "2", "3", "4", "5", "6", "7");
 
             switch (userInput) {
                 case "1":
@@ -269,7 +233,47 @@ public class UserInterface {
     }
 
     private void orderDrink() {
+        userInput = "";
+        while (!userInput.equals("6")) {
+            userInput = getValidatedInput("""
+                    ====================================
+                    Select A Drink
+                    
+                    1. Sake                     $8.00
+                    2. Green Tea                $2.00
+                    3. Water                    $FREE
+                    4. Coke                     $3.00
+                    5. Sprite                   $3.00
+                    6. Exit Drink List
+                    =====================================
+                    """, "1", "2", "3", "4", "5");
 
+            switch (userInput) {
+                case "1":
+                    items.add(new Drink("sake"));
+                    System.out.println("Sake added to your order");
+                    break;
+                case "2":
+                    items.add(new Drink("green tea"));
+                    System.out.println("Green Tea added to your order");
+                    break;
+                case "3":
+                    items.add(new Drink("water"));
+                    System.out.println("Water added to your order");
+                    break;
+                case "4":
+                    items.add(new Drink ("coke"));
+                    System.out.println("Coke added to your order");
+                    break;
+                case "5":
+                    items.add(new Drink ("sprite"));
+                    System.out.println("Sprite added to your order");
+                default:
+                    break;
+            }
+
+            orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+        }
     }
 
     private void getReceipt() {
@@ -292,6 +296,18 @@ public class UserInterface {
         } catch (Exception e) {
             System.out.println("Error with loading time");
         }
+    }
+
+    private String getValidatedInput(String prompt, String... validOptions) {
+        System.out.printf("%s", prompt);
+        String input = read.nextLine();
+
+        while (!Arrays.asList(validOptions).contains(input)) {
+            System.out.printf("Please enter a valid number ");
+            input = read.nextLine();
+        }
+
+        return input;
     }
 
 }

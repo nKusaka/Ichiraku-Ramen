@@ -16,7 +16,9 @@ public class Drink extends MenuItem {
             price = BigDecimal.valueOf(8);
         } else if (drinkType.trim().equalsIgnoreCase("green tea")) {
             price = BigDecimal.valueOf(2);
-        } else {
+        } else if (drinkType.trim().equalsIgnoreCase("water")) {
+            price = BigDecimal.ZERO;
+        }else {
             price = BigDecimal.valueOf(3);
         }
     }
