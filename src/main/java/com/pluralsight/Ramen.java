@@ -53,7 +53,7 @@ public class Ramen extends MenuItem implements Discountable {
                 size = "medium";
                 ramenPrice = ramenPrice.add(BigDecimal.valueOf(3));
                 break;
-            case 4:
+            case 3:
                 size = "large";
                 ramenPrice = ramenPrice.add(BigDecimal.valueOf(4));
                 break;
