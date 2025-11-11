@@ -39,7 +39,6 @@ public class UserInterface {
     // taking in users input
     private void displayMenu() {
 
-        boolean receiptPrinted = false;
         userInput = "";
         while (!userInput.equals("5") && !userInput.equals("4")) {
 
@@ -55,22 +54,29 @@ public class UserInterface {
 
             switch (userInput) {
                 case "1":
+                    userInput = "";
                     loadingTime();
                     orderRamen();
                     break;
                 case "2":
+                    userInput = "";
                     loadingTime();
                     orderAppetizer();
                     break;
                 case "3":
+                    userInput = "";
                     loadingTime();
                     orderDrink();
                     break;
                 case "4":
-                    loadingTime();
-                    getReceipt();
-                    receiptPrinted = true;
-                    break;
+                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
+                        System.out.println("Returning To Home Screen");
+                        loadingTime();
+                    } else {
+                        loadingTime();
+                        getReceipt();
+                        break;
+                    }
                 default:
                     break;
             }
@@ -233,7 +239,6 @@ public class UserInterface {
     }
 
     private void orderDrink() {
-        userInput = "";
         while (!userInput.equals("6")) {
             userInput = getValidatedInput("""
                     ====================================
@@ -246,7 +251,7 @@ public class UserInterface {
                     5. Sprite                   $3.00
                     6. Exit Drink List
                     =====================================
-                    """, "1", "2", "3", "4", "5");
+                    """, "1", "2", "3", "4", "5", "6");
 
             switch (userInput) {
                 case "1":
