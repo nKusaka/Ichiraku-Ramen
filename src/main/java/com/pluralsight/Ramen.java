@@ -23,6 +23,7 @@ public class Ramen extends MenuItem implements Discountable {
         super(ramenType);
         toppingsList = new ArrayList<>();
         toppingsPrice = BigDecimal.ZERO;
+        ramenPrice = BigDecimal.ZERO;
         size = "small";
 
         if (ramenType.toLowerCase().trim().contains("tonkotsu")) {
