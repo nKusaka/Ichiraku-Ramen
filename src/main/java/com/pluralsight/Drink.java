@@ -26,4 +26,9 @@ public class Drink extends MenuItem {
     public BigDecimal getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

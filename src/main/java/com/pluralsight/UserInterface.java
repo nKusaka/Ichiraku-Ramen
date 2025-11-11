@@ -234,7 +234,7 @@ public class UserInterface {
                 default:
                     break;
             }
-            orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+            orders.get(orders.size() - 1).addMenuItem(items);
         }
     }
 
@@ -277,17 +277,20 @@ public class UserInterface {
                     break;
             }
 
-            orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+            orders.get(orders.size() - 1).addMenuItem(items);
         }
     }
 
     private void getReceipt() {
+
         System.out.printf("""
                 =========================================
                             Printing Receipt\n""");
 
         loadingTime();
-
+        for (MenuItem item: orders.get(orders.size() - 1).getOrderList()) {
+            System.out.printf("1x %s\n", item);
+        }
         System.out.printf("""
                 Total: $%.2f
                 

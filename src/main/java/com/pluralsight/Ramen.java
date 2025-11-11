@@ -152,4 +152,21 @@ public class Ramen extends MenuItem implements Discountable {
     public void setSize(String size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(" (").append(size).append(")\n");
+
+        if (toppingsList.isEmpty()) {
+            sb.append("No toppings\n");
+        } else {
+            sb.append("Toppings:\n");
+            for (String topping : toppingsList) {
+                sb.append("   - ").append(topping).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
 }

@@ -1,7 +1,8 @@
 package com.pluralsight;
-
 import java.math.*;
 import java.time.*;
+import java.util.*;
+import java.util.stream.*;
 
 public class Appetizer extends MenuItem implements Discountable {
 
@@ -46,5 +47,13 @@ public class Appetizer extends MenuItem implements Discountable {
         } else {
             return price;
         }
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.stream(name.split(" "))
+                .filter(word -> !word.isEmpty())
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 }
