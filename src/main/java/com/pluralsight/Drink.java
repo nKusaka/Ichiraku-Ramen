@@ -5,8 +5,7 @@ import java.math.*;
 public class Drink extends MenuItem {
 
     // Instantiate class variables
-    String name;
-    BigDecimal price;
+    private BigDecimal price;
 
     // Constructor takes in a name for the drink and then depending on the name sets the price for the drink
     public Drink(String drinkType) {

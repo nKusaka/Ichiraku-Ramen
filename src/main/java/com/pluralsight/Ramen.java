@@ -156,7 +156,7 @@ public class Ramen extends MenuItem implements Discountable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" (").append(size).append(")\n");
+        sb.append(name).append(" (").append(size).append(")").append("        $").append(getPrice().setScale(2, RoundingMode.HALF_UP)).append("\n");
 
         if (toppingsList.isEmpty()) {
             sb.append("No toppings\n");

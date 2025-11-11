@@ -130,15 +130,15 @@ public class UserInterface {
         if (items.get(items.size() - 1) instanceof Ramen) {
             switch (userInput) {
                 case "1":
-                    ((Ramen) items.get(0)).addRamenSize(1);
+                    ((Ramen) items.get(items.size() - 1)).addRamenSize(1);
                     System.out.println("You selected Small for your bowl size");
                     break;
                 case "2":
-                    ((Ramen) items.get(0)).addRamenSize(2);
+                    ((Ramen) items.get(items.size() - 1)).addRamenSize(2);
                     System.out.println("You selected Medium for your bowl size");
                     break;
                 case "3":
-                    ((Ramen) items.get(0)).addRamenSize(3);
+                    ((Ramen) items.get(items.size() - 1)).addRamenSize(3);
                     System.out.println("You selected Large for your bowl size");
                     break;
                 default:
@@ -193,48 +193,50 @@ public class UserInterface {
 
         userInput = "";
         while (!userInput.equals("7")) {
-            userInput = getValidatedInput("""
-                    ==========================================
-                    Select An Appetizer
-                    
-                    1. Gyoza 6 Pieces               $8.00
-                    2. Takoyaki 8 Pieces            $10.00
-                    3. Edamame                      $6.00
-                    4. Wakame Salad                 $5.50
-                    5. Squid Karaage                $12.00
-                    6. Chicken Karaage              $7.00
-                    7. Exit Appetizer List
-                    ==========================================\n""", "1", "2", "3", "4", "5", "6", "7");
+            if (!userInput.equals("7")) {
+                userInput = getValidatedInput("""
+                        ==========================================
+                        Select An Appetizer
+                        
+                        1. Gyoza 6 Pieces               $8.00
+                        2. Takoyaki 8 Pieces            $10.00
+                        3. Edamame                      $6.00
+                        4. Wakame Salad                 $5.50
+                        5. Squid Karaage                $12.00
+                        6. Chicken Karaage              $7.00
+                        7. Exit Appetizer List
+                        ==========================================\n""", "1", "2", "3", "4", "5", "6", "7");
 
-            switch (userInput) {
-                case "1":
-                    items.add(new Appetizer("gyoza"));
-                    System.out.println("Gyoza has been added to your order");
-                    break;
-                case "2":
-                    items.add(new Appetizer("takoyaki"));
-                    System.out.println("Takoyaki has been added to your order");
-                    break;
-                case "3":
-                    items.add(new Appetizer("edamame"));
-                    System.out.println("Edamame has been added to your order");
-                    break;
-                case "4":
-                    items.add(new Appetizer("wakame salad"));
-                    System.out.println("Wakame Salad has been added to your order");
-                    break;
-                case "5":
-                    items.add(new Appetizer("squid karaage"));
-                    System.out.println("Squid Karaage has been added to your order");
-                    break;
-                case "6":
-                    items.add(new Appetizer("chicken karaage"));
-                    System.out.println("Chicken Karaage has been added to your order");
-                    break;
-                default:
-                    break;
+                switch (userInput) {
+                    case "1":
+                        items.add(new Appetizer("gyoza"));
+                        System.out.println("Gyoza has been added to your order");
+                        break;
+                    case "2":
+                        items.add(new Appetizer("takoyaki"));
+                        System.out.println("Takoyaki has been added to your order");
+                        break;
+                    case "3":
+                        items.add(new Appetizer("edamame"));
+                        System.out.println("Edamame has been added to your order");
+                        break;
+                    case "4":
+                        items.add(new Appetizer("wakame salad"));
+                        System.out.println("Wakame Salad has been added to your order");
+                        break;
+                    case "5":
+                        items.add(new Appetizer("squid karaage"));
+                        System.out.println("Squid Karaage has been added to your order");
+                        break;
+                    case "6":
+                        items.add(new Appetizer("chicken karaage"));
+                        System.out.println("Chicken Karaage has been added to your order");
+                        break;
+                    default:
+                        break;
+                }
+                orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
             }
-            orders.get(orders.size() - 1).addMenuItem(items);
         }
     }
 
@@ -253,49 +255,57 @@ public class UserInterface {
                     =====================================
                     """, "1", "2", "3", "4", "5", "6");
 
-            switch (userInput) {
-                case "1":
-                    items.add(new Drink("sake"));
-                    System.out.println("Sake added to your order");
-                    break;
-                case "2":
-                    items.add(new Drink("green tea"));
-                    System.out.println("Green Tea added to your order");
-                    break;
-                case "3":
-                    items.add(new Drink("water"));
-                    System.out.println("Water added to your order");
-                    break;
-                case "4":
-                    items.add(new Drink ("coke"));
-                    System.out.println("Coke added to your order");
-                    break;
-                case "5":
-                    items.add(new Drink ("sprite"));
-                    System.out.println("Sprite added to your order");
-                default:
-                    break;
+            if (!userInput.equals("6")) {
+                switch (userInput) {
+                    case "1":
+                        items.add(new Drink("sake"));
+                        System.out.println("Sake added to your order");
+                        break;
+                    case "2":
+                        items.add(new Drink("green tea"));
+                        System.out.println("Green Tea added to your order");
+                        break;
+                    case "3":
+                        items.add(new Drink("water"));
+                        System.out.println("Water added to your order");
+                        break;
+                    case "4":
+                        items.add(new Drink("coke"));
+                        System.out.println("Coke added to your order");
+                        break;
+                    case "5":
+                        items.add(new Drink("sprite"));
+                        System.out.println("Sprite added to your order");
+                        break;
+                    default:
+                        break;
+                }
+                orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
             }
-
-            orders.get(orders.size() - 1).addMenuItem(items);
         }
     }
 
     private void getReceipt() {
 
         System.out.printf("""
-                =========================================
+                =================================================
                             Printing Receipt\n""");
 
         loadingTime();
         for (MenuItem item: orders.get(orders.size() - 1).getOrderList()) {
-            System.out.printf("1x %s\n", item);
+            if (item instanceof Ramen) {
+                System.out.printf("%s", item);
+            } else if (item instanceof Appetizer) {
+                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
+            } else if (item instanceof Drink) {
+                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
+            }
         }
         System.out.printf("""
-                Total: $%.2f
+                \n\nTotal: $%.2f
                 
                 Have a great day!
-                ==========================================\n""", orders.get(orders.size() - 1).getOrderTotal().doubleValue());
+                ==================================================\n""", orders.get(orders.size() - 1).getOrderTotal().doubleValue());
     }
 
     private void loadingTime() {
