@@ -8,8 +8,8 @@ public class UserInterface {
     // Variables that will be used throughout the class
     static Scanner read = new Scanner(System.in);
     static String userInput = "";
-    private List<MenuItem> items;
-    private List<Order> orders;
+    private List<MenuItem> items = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
     static FileManager fileManager = new FileManager();
 
@@ -29,8 +29,6 @@ public class UserInterface {
                     ============================================\n""", "1", "2");
 
             if (userInput.equals("1")) {
-                orders = new ArrayList<>();
-                items = new ArrayList<>();
                 loadingTime();
                 displayMenu();
             }
@@ -41,6 +39,7 @@ public class UserInterface {
     // taking in users input
     private void displayMenu() {
 
+        orders.add(new Order());
         userInput = "";
         while (!userInput.equals("5") && !userInput.equals("4")) {
 
@@ -57,19 +56,16 @@ public class UserInterface {
             switch (userInput) {
                 case "1":
                     userInput = "";
-                    orders.add(new Order());
                     loadingTime();
                     orderRamen();
                     break;
                 case "2":
                     userInput = "";
-                    orders.add(new Order());
                     loadingTime();
                     orderAppetizer();
                     break;
                 case "3":
                     userInput = "";
-                    orders.add(new Order());
                     loadingTime();
                     orderDrink();
                     break;
@@ -342,5 +338,4 @@ public class UserInterface {
 
         return input;
     }
-
 }
