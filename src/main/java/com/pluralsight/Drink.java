@@ -22,10 +22,12 @@ public class Drink extends MenuItem {
         }
     }
 
+    // Getter for the price of the drink
     public BigDecimal getPrice() {
         return price;
     }
 
+    // toString to help output the drinks for the receipt
     @Override
     public String toString() {
         return name;

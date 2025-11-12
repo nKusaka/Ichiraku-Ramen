@@ -37,6 +37,7 @@ public class Order {
         orderList.addAll(menuItems);
     }
 
+    // Method calculates the total cost of the order and returns it
     public BigDecimal getOrderTotal() {
         BigDecimal orderTotal = BigDecimal.ZERO;
 
@@ -47,6 +48,7 @@ public class Order {
         return orderTotal;
     }
 
+    // Getters and Setters
     public List<MenuItem> getOrderList() {
         return orderList;
     }

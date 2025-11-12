@@ -35,11 +35,13 @@ public class Appetizer extends MenuItem implements Discountable {
         }
     }
 
+    // Discount is applied at 50% of the appetizers cost
     @Override
     public BigDecimal applyDiscount(BigDecimal total) {
         return total.multiply(BigDecimal.valueOf(0.5));
     }
 
+    // Calculates the price of the item and if it is friday discounts the item by 50%
     public BigDecimal getPrice() {
         LocalDate today = LocalDate.now();
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
@@ -49,6 +51,7 @@ public class Appetizer extends MenuItem implements Discountable {
         }
     }
 
+    // toString to help output the Appetizer to the receipt later on
     @Override
     public String toString() {
         return Arrays.stream(name.split(" "))

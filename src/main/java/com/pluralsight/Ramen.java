@@ -138,6 +138,7 @@ public class Ramen extends MenuItem implements Discountable {
         }
     }
 
+    // Getters and Setters
     public List<String> getToppingsList() {
         return toppingsList;
     }
@@ -154,6 +155,7 @@ public class Ramen extends MenuItem implements Discountable {
         this.size = size;
     }
 
+    // Overrided toString to output the type of ramen with bowl size and toppings
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
