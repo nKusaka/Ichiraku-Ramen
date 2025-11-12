@@ -10,7 +10,8 @@ public class UserInterface {
     static String userInput = "";
     private List<MenuItem> items;
     private List<Order> orders;
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                   HH:mm:ss");
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
+    static FileManager fileManager = new FileManager();
 
     // Method creates the welcome screen for the user
     public void welcomeScreen() {
@@ -85,7 +86,7 @@ public class UserInterface {
                     break;
             }
         }
-
+        fileManager.saveToFile(orders);
         items.clear();
     }
 

@@ -1,5 +1,5 @@
 package com.pluralsight;
-
+import java.io.IOException;
 import java.math.*;
 import java.util.*;
 
@@ -55,5 +55,13 @@ public class Order {
 
     public void setOrderList(List<MenuItem> orderList) {
         this.orderList = orderList;
+    }
+
+    // Helper method to convert order total to string when writing to file: receipt.csv
+    public String toCSV() {
+        StringBuilder csv = new StringBuilder();
+
+        csv.append(String.format("%.2f", getOrderTotal().doubleValue()));
+        return csv.toString();
     }
 }
