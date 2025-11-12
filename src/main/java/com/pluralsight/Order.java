@@ -44,7 +44,7 @@ public class Order {
             orderTotal = orderTotal.add(mI.getPrice());
         }
 
-        return orderTotal.multiply(BigDecimal.valueOf(1.07));
+        return orderTotal;
     }
 
     public List<MenuItem> getOrderList() {
