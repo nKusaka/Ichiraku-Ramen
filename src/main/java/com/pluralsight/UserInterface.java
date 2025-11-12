@@ -240,6 +240,8 @@ public class UserInterface {
         }
     }
 
+    // Method creates a drink object to be passed into the order list later on
+    // users can order as many drinks as they would like and finish ordering by pressing 6
     private void orderDrink() {
         while (!userInput.equals("6")) {
             userInput = getValidatedInput("""
@@ -285,6 +287,8 @@ public class UserInterface {
         }
     }
 
+    // Method creates the receipt for the user displaying all items they have purchased
+    // Outputs the total cost of the items purchased
     private void getReceipt() {
 
         System.out.printf("""
@@ -308,6 +312,7 @@ public class UserInterface {
                 ==================================================\n""", orders.get(orders.size() - 1).getOrderTotal().doubleValue());
     }
 
+    // Method adds a bit of loading time so the user has time to process output
     private void loadingTime() {
         try {
             Thread.sleep(1000);
@@ -316,6 +321,9 @@ public class UserInterface {
         }
     }
 
+    /* Helper method to check if inputs are valid, before a lot of code was being copy pasted
+    around to validate input. Asked ChatGPT to see if there was a better way and gave this helper
+    method */
     private String getValidatedInput(String prompt, String... validOptions) {
         System.out.printf("%s", prompt);
         String input = read.nextLine();
