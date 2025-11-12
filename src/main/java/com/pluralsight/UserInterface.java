@@ -1,4 +1,5 @@
 package com.pluralsight;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -71,6 +72,7 @@ public class UserInterface {
                     break;
                 case "4":
                     if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
+                        orders.remove(orders.get(orders.size() - 1));
                         System.out.println("Returning To Home Screen");
                         loadingTime();
                     } else {
@@ -78,10 +80,16 @@ public class UserInterface {
                         getReceipt();
                         break;
                     }
+                case "5":
+                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
+                        orders.remove(orders.get(orders.size() - 1));
+                    }
+                    break;
                 default:
                     break;
             }
         }
+
         fileManager.saveToFile(orders);
         items.clear();
     }
