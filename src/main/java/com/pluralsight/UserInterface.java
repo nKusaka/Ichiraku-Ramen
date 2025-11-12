@@ -1,5 +1,6 @@
 package com.pluralsight;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UserInterface {
@@ -9,6 +10,7 @@ public class UserInterface {
     static String userInput = "";
     private List<MenuItem> items;
     private List<Order> orders;
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                   HH:mm:ss");
 
     // Method creates the welcome screen for the user
     public void welcomeScreen() {
@@ -27,7 +29,6 @@ public class UserInterface {
 
             if (userInput.equals("1")) {
                 orders = new ArrayList<>();
-                orders.add(new Order());
                 items = new ArrayList<>();
                 loadingTime();
                 displayMenu();
@@ -55,16 +56,19 @@ public class UserInterface {
             switch (userInput) {
                 case "1":
                     userInput = "";
+                    orders.add(new Order());
                     loadingTime();
                     orderRamen();
                     break;
                 case "2":
                     userInput = "";
+                    orders.add(new Order());
                     loadingTime();
                     orderAppetizer();
                     break;
                 case "3":
                     userInput = "";
+                    orders.add(new Order());
                     loadingTime();
                     orderDrink();
                     break;
@@ -296,6 +300,8 @@ public class UserInterface {
                             Printing Receipt\n""");
 
         loadingTime();
+        System.out.printf("%s\n", LocalDateTime.now().format(formatter));
+
         for (MenuItem item : orders.get(orders.size() - 1).getOrderList()) {
             if (item instanceof Ramen) {
                 System.out.printf("%s", item);
