@@ -76,6 +76,7 @@ public class UserInterface {
                     break;
                 case "4":
                     if (order.getOrderList().isEmpty()) {
+                        System.out.println("Nothing to Checkout");
                         System.out.println("Returning To Home Screen");
                         loadingTime();
                     } else {
