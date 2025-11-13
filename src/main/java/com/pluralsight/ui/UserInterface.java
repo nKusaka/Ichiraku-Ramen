@@ -3,6 +3,10 @@ package com.pluralsight.ui;
 import com.pluralsight.models.*;
 import com.pluralsight.util.FileManager;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UserInterface {
@@ -88,8 +92,6 @@ public class UserInterface {
                     break;
             }
         }
-
-        fileManager.printReceipt(order);
         items.clear();
     }
 
@@ -165,7 +167,7 @@ public class UserInterface {
                         5. Bamboo Shoots (premium)          +$4.00
                         6. Wagyu Beef (premium)             +$4.00
                         7. Exit Toppings List
-                    ==============================================\n""", "1", "2", "3", "4", "5", "6","7");
+                    ==============================================\n""", "1", "2", "3", "4", "5", "6", "7");
 
             if (items.get(items.size() - 1) instanceof Ramen) {
                 switch (userInput) {
@@ -335,16 +337,34 @@ public class UserInterface {
     private void checkout() {
 
         System.out.printf("""
-                ===============================================
-                            Printing Receipt\n""");
+                ========================================
+                            Getting Total
+                ========================================\n""");
 
         loadingTime();
 
-        System.out.printf("""
-                            \n\nHave a great day!
-                ===============================================\n""", order.getOrderTotal().doubleValue());
-
-        loadingTime();
+        getOrderDetails();
+        userInput = getValidatedInput("""
+                ==========================
+                     1. Confirm Order
+                     2. Cancel Order
+                ==========================\n""", "1", "2");
+        if (userInput.equals("1")) {
+            fileManager.printReceipt(order);
+            userInput = "5";
+            System.out.printf("""
+                    =============================================
+                         Purchase complete have a nice day
+                    =============================================\n""");
+            loadingTime();
+        } else {
+            userInput = "5";
+            System.out.printf("""
+                    ===============================
+                           Cancelling Order
+                    ===============================\n""");
+            loadingTime();
+        }
     }
 
     // Method adds a bit of loading time so the user has time to process output
@@ -369,5 +389,50 @@ public class UserInterface {
         }
 
         return input;
+    }
+
+    // Helper method to print the receipt for the user
+
+    private void getOrderDetails() {
+        LocalDate today = LocalDate.now();
+        StringBuilder ramenName = new StringBuilder();
+        StringBuilder toppingName = new StringBuilder();
+        int counter = 0;
+        StringBuilder drinkName = new StringBuilder();
+
+        System.out.printf("====================================================\n");
+
+        for (MenuItem item : order.getOrderList()) {
+            if (item instanceof Ramen) {
+                ramenName.append(String.format("%-43s $%.2f\n", item + " (" + ((Ramen) item).getSize() + ")", ((Ramen) item).getBasePrice()));
+                System.out.printf("%s", ramenName);
+
+                if (((Ramen) item).getToppingsList().isEmpty()) {
+                    System.out.printf(" -No Toppings Added\n");
+                } else {
+                    for (String topping : ((Ramen) item).getToppingsList()) {
+                        toppingName.append(String.format(" - %-40s $%.2f\n", topping, ((Ramen) item).getToppingPrice(counter)));
+                        System.out.printf("%s", toppingName);
+                        counter++;
+                        toppingName.setLength(0);
+                    }
+                }
+
+            } else if (item instanceof Appetizer) {
+                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
+            } else if (item instanceof Drink) {
+                drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
+                System.out.printf("%s", drinkName);
+            }
+            counter = 0;
+            ramenName.setLength(0);
+            toppingName.setLength(0);
+        }
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            System.out.printf("\n\nFriday Discount Total: $%.2f\n\n", order.getOrderTotal().doubleValue());
+        } else {
+            System.out.printf("\n\nTotal: $%.2f\n\n", order.getOrderTotal().doubleValue());
+        }
+
     }
 }

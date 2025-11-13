@@ -125,15 +125,17 @@ public class Ramen extends MenuItem implements Discountable {
         for (int i = counter; i < getToppingsList().size(); i++) {
             switch (toppingsList.get(i)) {
                 case "extra noodles":
-                    return BigDecimal.valueOf(4);
-                case "chashu 2 pieces":
                     return BigDecimal.valueOf(1.50);
+                case "chashu 2 pieces":
+                    return BigDecimal.valueOf(2);
                 case "soft boiled egg":
                     return BigDecimal.valueOf(1);
-                case "whole fried garlic":
-                    return BigDecimal.valueOf(2.50);
-                case "bamboo shoots":
-                    return BigDecimal.valueOf(3);
+                case "whole fried garlic (premium)":
+                    return BigDecimal.valueOf(4);
+                case "bamboo shoots (premium)":
+                    return BigDecimal.valueOf(4);
+                case "wagyu beef (premium)":
+                    return BigDecimal.valueOf(4);
             }
         }
         return BigDecimal.valueOf(0);
