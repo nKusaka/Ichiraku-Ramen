@@ -2,12 +2,14 @@ package com.pluralsight;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-public class UserInterface {
+public class UserInterface extends JFrame implements KeyListener {
 
     // Variables that will be used throughout the class
     static Scanner read = new Scanner(System.in);
@@ -50,129 +52,76 @@ public class UserInterface {
     // Method creates the menu screen for the user and moves to the appropriate screen after
     // taking in users input
     private void displayMenu() {
-
-        // Create panel and new button for display menu
+        // Main panel with BorderLayout
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(null);
-        JButton ramenButton = new JButton();
-        JButton appetizerButton = new JButton();
-        JButton drinkButton = new JButton();
-        JButton cancelButton = new JButton();
-        JButton placeOrderButton = new JButton();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
-        // set size of buttons and align them within the panel
-        ramenButton.setBounds(200, 300, 200, 120);
-        appetizerButton.setBounds(600, 300, 200, 120);
-        drinkButton.setBounds(200, 500, 200, 120);
-        placeOrderButton.setBounds(600,500,200,120);
-        cancelButton.setBounds(800,800,150,70);
+        // Title at the top
+        JLabel title = new JLabel("<html><center>Ichiraku Ramen<br>一楽ラーメン</center></html>", SwingConstants.CENTER);
+        title.setForeground(new Color(212, 175, 55)); // RGB for gold
+        title.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuPanel.add(title);
+        menuPanel.add(Box.createVerticalStrut(-30));
 
-        // set the text of each button and font
-        ramenButton.setText("Ramen");
-        appetizerButton.setText("Appetizers");
-        drinkButton.setText("Drinks");
-        placeOrderButton.setText("Pay");
-        cancelButton.setText("Cancel Order");
-        ramenButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-        appetizerButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-        drinkButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-        placeOrderButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-        cancelButton.setFont(new Font("MS UI Gothic", Font.BOLD, 15));
+        // Panel for buttons (side by side)
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 50));
+        JButton ramenButton = new JButton("Ramen");
+        JButton appetizerButton = new JButton("Appetizers");
+        JButton drinkButton = new JButton("Drinks");
+        JButton placeOrderButton = new JButton("Pay");
+        JButton cancelButton = new JButton("Cancel Order");
 
-        // add buttons to the menu panel
-        menuPanel.add(ramenButton).setFocusable(false);
-        menuPanel.add(appetizerButton).setFocusable(false);
-        menuPanel.add(drinkButton).setFocusable(false);
-        menuPanel.add(placeOrderButton).setFocusable(false);
-        menuPanel.add(cancelButton).setFocusable(false);
+        // Background Panel for Title
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setBounds(0,0,1920,300);
+        backgroundPanel.setBackground(Color.BLACK);
 
+        // Set button fonts
+        Font btnFont = new Font("MS UI Gothic", Font.BOLD, 20);
+        ramenButton.setFont(btnFont);
+        appetizerButton.setFont(btnFont);
+        drinkButton.setFont(btnFont);
+        placeOrderButton.setFont(btnFont);
+        cancelButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 
-        // Display the menu
+        // Add buttons to button panel
+        buttonPanel.add(ramenButton);
+        buttonPanel.add(appetizerButton);
+        buttonPanel.add(drinkButton);
+        buttonPanel.add(placeOrderButton);
+        buttonPanel.add(cancelButton);
+
+        // Add button panel to main panel
+        menuPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Display in frame
         frame.getContentPane().removeAll();
         frame.add(menuPanel);
         frame.revalidate();
         frame.repaint();
 
-        // Create the different action listeners that will go to different order screens or exit back to main screen.
-        ramenButton.addActionListener(e ->
-        {
+        ramenButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
             orderRamen();
         });
-
-        appetizerButton.addActionListener(e ->
-        {
+        appetizerButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
             orderAppetizer();
         });
-
-        drinkButton.addActionListener(e ->
-        {
+        drinkButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
             orderDrink();
         });
-
-        cancelButton.addActionListener(e ->
-        {
+        cancelButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
             if (!orders.isEmpty()) {
-                orders.remove(orders.get(orders.size() - 1));
+                orders.remove(orders.size() - 1);
+                welcomeScreen();
             }
-            welcomeScreen();
         });
-//        orders.add(new Order());
-//        userInput = "";
-//        while (!userInput.equals("5") && !userInput.equals("4")) {
-//
-//            userInput = getValidatedInput("""
-//                    ===============================================
-//                            Enter One Of The Numbers Below
-//                                  1. Order Ramen
-//                                  2. Order Appetizers
-//                                  3. Order Drinks
-//                                  4. Finished Ordering
-//                                  5. Cancel Order
-//                    ===============================================\n""", "1", "2", "3", "4", "5");
-//
-//            switch (userInput) {
-//                case "1":
-//                    userInput = "";
-//                    loadingTime();
-//                    orderRamen();
-//                    break;
-//                case "2":
-//                    userInput = "";
-//                    loadingTime();
-//                    orderAppetizer();
-//                    break;
-//                case "3":
-//                    userInput = "";
-//                    loadingTime();
-//                    orderDrink();
-//                    break;
-//                case "4":
-//                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
-//                        orders.remove(orders.get(orders.size() - 1));
-//                        System.out.println("Returning To Home Screen");
-//                        loadingTime();
-//                    } else {
-//                        loadingTime();
-//                        getReceipt();
-//                        break;
-//                    }
-//                case "5":
-//                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
-//                        orders.remove(orders.get(orders.size() - 1));
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//
-//        fileManager.saveToFile(orders);
-//        items.clear();
     }
+
 
     // Method creates a Ramen object to be passed into the order list later on
     // Users can customize their ramen by type, bowl size, and toppings if they would like
@@ -275,6 +224,7 @@ public class UserInterface {
 //        orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
 //        System.out.println("Your ramen has been added to your order");
     }
+
     //
 //    // Method creates an appetizer object to be passed into the order list later on
 //    // Users can order as many appetizers as they would like and finish ordering by pressing 7
@@ -328,6 +278,7 @@ public class UserInterface {
 //            }
 //        }
     }
+
     //
 //    // Method creates a drink object to be passed into the order list later on
 //    // users can order as many drinks as they would like and finish ordering by pressing 6
@@ -428,11 +379,33 @@ public class UserInterface {
         frame.setTitle("Ichiraku Ramen");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setSize(1000, 1000);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
+        frame.setUndecorated(true);
         frame.setIconImage(image.getImage());
         frame.setVisible(true);
+        frame.addKeyListener(this);
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
 
         welcomeScreen();
+    }
+
+    // Override methods for keylistener interface
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
