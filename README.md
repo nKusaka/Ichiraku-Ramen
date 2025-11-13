@@ -42,7 +42,7 @@
 <img width="720" height="480" alt="image" src="https://github.com/user-attachments/assets/b4bb8101-89a9-4611-ae8a-2c51b474355d" />
 
 
-*Example Receipt
+* Example Receipt
 <img width="720" height="480" alt="image" src="https://github.com/user-attachments/assets/9ccf1b67-b1f9-4509-9099-295fbbde33cd" />
 
 
