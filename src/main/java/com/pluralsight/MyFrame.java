@@ -1,11 +1,14 @@
 package com.pluralsight;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 // This class creates the frame for the ui
 public class MyFrame extends JFrame implements KeyListener {
+    private JButton welcomeButton;
+
 
     public MyFrame() {
         ImageIcon logo = new ImageIcon("logo.png");
@@ -21,6 +24,37 @@ public class MyFrame extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
+    }
+
+    // Welcome frame
+    public void welcomeScreen() {
+        welcomeButton = new JButton();
+        welcomeButton.setFocusable(false);
+        this.getContentPane().removeAll();
+
+        welcomeButton.addActionListener(e ->
+        {
+            this.getContentPane().removeAll();
+            displayOptions();
+        });
+
+        welcomeButton.setText("""
+                <html><center>
+                Welcome To Ichiraku Order Now<br>
+                一楽ラーメン
+                </center></html>
+                """);
+        welcomeButton.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
+        this.add(welcomeButton);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+
+
+    private void displayOptions() {
+
     }
 
     @Override
