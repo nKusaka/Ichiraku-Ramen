@@ -14,7 +14,7 @@
 * Checkout screen where users are asked if they would like to confirm or cancel their order one more time
 * receipt.txt file where the users receipt is printed nicely. 
 
-### Images
+### Screenshots Of Code
 <img width="364" height="177" alt="image" src="https://github.com/user-attachments/assets/018eb042-5926-4868-9a7b-6485170a6b3a" />
 
 
@@ -45,6 +45,10 @@
 
 <img width="433" height="281" alt="image" src="https://github.com/user-attachments/assets/9ccf1b67-b1f9-4509-9099-295fbbde33cd" />
 
-<img width="915" height="379" alt="image" src="https://github.com/user-attachments/assets/5f4ab037-19ef-4192-bf81-9e9ac14efe54" />
+### Interesting Piece of Code
+This piece of code acts as a way for menu items to be discounted. Each item can interpret the way it wants to discount
+its items.
+<img width="650" height="206" alt="image" src="https://github.com/user-attachments/assets/e2609d47-2f5f-43ee-804e-5caef17794c1" />
+
 
 
