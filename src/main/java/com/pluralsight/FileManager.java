@@ -19,7 +19,7 @@ public class FileManager {
         File file = new File(fileName);
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
-            bufferedWriter.write(String.format("%-20s %-20s", "Ichiraku Ramen\n, 123 Ramen Street"));
+            bufferedWriter.write(String.format("                Ichiraku Ramen\n,                123 Ramen Street\n"));
             for (MenuItem item: order.getOrderList()) {
                 if (item instanceof Ramen) {
                     bufferedWriter.write(String.format("%s", item));
