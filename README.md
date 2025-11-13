@@ -51,7 +51,7 @@ This piece of code acts as a way for menu items to be discounted. Each item can 
 its items.
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e2609d47-2f5f-43ee-804e-5caef17794c1" />
 
-#UML Diagram Screenshots
+## UML Diagram Screenshots
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/53ecb4b7-017f-4220-a52d-b2ff1b8fef7c" />
 
 
