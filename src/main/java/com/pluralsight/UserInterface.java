@@ -10,7 +10,7 @@ public class UserInterface {
     static Scanner read = new Scanner(System.in);
     static String userInput = "";
     private List<MenuItem> items = new ArrayList<>();
-    private List<Order> orders = new ArrayList<>();
+    private Order order;
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
     static FileManager fileManager = new FileManager();
 
@@ -40,7 +40,7 @@ public class UserInterface {
     // taking in users input
     private void displayMenu() {
 
-        orders.add(new Order());
+        order = new Order();
         userInput = "";
         while (!userInput.equals("5") && !userInput.equals("4")) {
 
@@ -71,8 +71,7 @@ public class UserInterface {
                     orderDrink();
                     break;
                 case "4":
-                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
-                        orders.remove(orders.get(orders.size() - 1));
+                    if (order.getOrderList().isEmpty()) {
                         System.out.println("Returning To Home Screen");
                         loadingTime();
                     } else {
@@ -81,8 +80,8 @@ public class UserInterface {
                         break;
                     }
                 case "5":
-                    if (orders.get(orders.size() - 1).getOrderList().isEmpty()) {
-                        orders.remove(orders.get(orders.size() - 1));
+                    if (!order.getOrderList().isEmpty()) {
+                        order.getOrderList().clear();
                     }
                     break;
                 default:
@@ -90,7 +89,7 @@ public class UserInterface {
             }
         }
 
-        fileManager.saveToFile(orders);
+        fileManager.saveToFile(order);
         items.clear();
     }
 
@@ -192,7 +191,7 @@ public class UserInterface {
                 }
             }
         }
-        orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+        order.addMenuItem(items.get(items.size() - 1));
         System.out.println("Your ramen has been added to your order");
     }
 
@@ -244,7 +243,7 @@ public class UserInterface {
                     break;
             }
             if (!userInput.equals("7")) {
-                orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+                order.addMenuItem(items.get(items.size() - 1));
             }
         }
     }
@@ -291,7 +290,7 @@ public class UserInterface {
                     default:
                         break;
                 }
-                orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
+                order.addMenuItem(items.get(items.size() - 1));
             }
         }
     }
@@ -307,7 +306,7 @@ public class UserInterface {
         loadingTime();
         System.out.printf("%s\n", LocalDateTime.now().format(formatter));
 
-        for (MenuItem item : orders.get(orders.size() - 1).getOrderList()) {
+        for (MenuItem item : order.getOrderList()) {
             if (item instanceof Ramen) {
                 System.out.printf("%s", item);
             } else if (item instanceof Appetizer) {
@@ -320,7 +319,9 @@ public class UserInterface {
                 \n\nTotal: $%.2f
                 
                 Have a great day!
-                ==================================================\n""", orders.get(orders.size() - 1).getOrderTotal().doubleValue());
+                ==================================================\n""", order.getOrderTotal().doubleValue());
+
+        order.getOrderList().clear();
     }
 
     // Method adds a bit of loading time so the user has time to process output

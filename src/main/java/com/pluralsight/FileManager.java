@@ -11,31 +11,28 @@ import java.util.List;
 
 // File manager to save orders as receipts in receipts.txt
 public class FileManager {
-    private String fileName = "receipts.csv";
-    private boolean header = false;
-    private int counter = 1;
+    private String fileName = "receipts.txt";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
-
+    int counter = 1;
     // Method saves the orders to a receipt
-    public void saveToFile(List<Order> orders) {
+    public void printReceipt(Order order) {
         File file = new File(fileName);
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
-            // Write header only if file is new
-            if (!header) {
-                bufferedWriter.write("order #|order total|date|time\n");
-                header = true;
-            }
-
-            for (Order order: orders) {
-                if (orders.indexOf(order) >= counter - 1) {
-                    bufferedWriter.write(counter + "|" + orders.get(counter - 1).toCSV() + "|" +
-                            LocalDateTime.now().format(formatter) + "\n");
-                    counter++;
+            bufferedWriter.write(String.format("%-20s %-20s", "Ichiraku Ramen\n, 123 Ramen Street"));
+            for (MenuItem item: order.getOrderList()) {
+                if (item instanceof Ramen) {
+                    bufferedWriter.write(String.format("%s", item));
+                } else if (item instanceof Appetizer) {
+                    bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
+                } else if (item instanceof Drink) {
+                    bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
                 }
             }
+
         } catch (IOException e) {
             System.out.println("Issue writing to file: " + e.getMessage());
         }
+        counter ++;
     }
 }
