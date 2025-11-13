@@ -1,438 +1,156 @@
 package com.pluralsight.ui;
 
-import com.pluralsight.models.*;
-import com.pluralsight.util.FileManager;
+import com.pluralsight.models.Order;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class UserInterface {
-
-    // Variables that will be used throughout the class
-    static Scanner read = new Scanner(System.in);
-    static String userInput = "";
-    private List<MenuItem> items = new ArrayList<>();
+public class UserInterface extends JFrame implements KeyListener {
+    private JButton welcomeButton;
     private Order order;
-    static FileManager fileManager = new FileManager();
 
-    // Method creates the welcome screen for the users
-    public void welcomeScreen() {
-
-        while (!userInput.equals("2")) {
-
-            userInput = getValidatedInput("""
-                    ============================================
-                    
-                              🍜Welcome to Ichiraku!!🍜
-                    
-                                1. New Order
-                                2. Exit
-                    
-                    ============================================\n""", "1", "2");
-
-            if (userInput.equals("1")) {
-                loadingTime();
-                displayMenu();
-            }
-        }
-    }
-
-    // Method creates the menu screen for the user and moves to the appropriate screen after
-    // taking in users input
-    private void displayMenu() {
-
+    public UserInterface() {
+        ImageIcon logo = new ImageIcon("logo.png");
         order = new Order();
-        userInput = "";
-        while (!userInput.equals("5") && !userInput.equals("4")) {
 
-            userInput = getValidatedInput("""
-                    ===============================================
-                            Enter One Of The Numbers Below
-                                  1. Order Ramen
-                                  2. Order Appetizers
-                                  3. Order Drinks
-                                  4. Checkout
-                                  5. Cancel Order
-                    ===============================================\n""", "1", "2", "3", "4", "5");
-
-            switch (userInput) {
-                case "1":
-                    userInput = "";
-                    loadingTime();
-                    orderRamen();
-                    break;
-                case "2":
-                    userInput = "";
-                    loadingTime();
-                    orderAppetizer();
-                    break;
-                case "3":
-                    userInput = "";
-                    loadingTime();
-                    orderDrink();
-                    break;
-                case "4":
-                    if (order.getOrderList().isEmpty()) {
-                        System.out.println("Nothing to Checkout");
-                        System.out.println("Returning To Home Screen");
-                        loadingTime();
-                    } else {
-                        loadingTime();
-                        checkout();
-                        break;
-                    }
-                case "5":
-                    if (!order.getOrderList().isEmpty()) {
-                        order.getOrderList().clear();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        items.clear();
+        this.setTitle("Ichiraku Ramen");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
+        this.setUndecorated(true);
+        this.setIconImage(logo.getImage());
+        this.setVisible(true);
+        this.addKeyListener(this);
+        this.setFocusable(true);
+        this.requestFocusInWindow();
     }
 
-    // Method creates a Ramen object to be passed into the order list later on
-    // Users can customize their ramen by type, bowl size, and toppings if they would like
-    private void orderRamen() {
+    // Welcome frame
+    public void welcomeScreen() {
+        welcomeButton = new JButton();
+        welcomeButton.setFocusable(false);
+        this.getContentPane().removeAll();
 
-        userInput = getValidatedInput("""
-                ================================================
-                        Select A Type Of Ramen
-                        1. Tonkotsu Ramen                $12.00
-                        2. Red Garlic Tonkotsu Ramen     $14.00
-                        3. Black Garlic Tonkotsu Ramen   $16.00
-                        4. Miso Tonkotsu Ramen           $12.00
-                ================================================\n""", "1", "2", "3", "4");
+        welcomeButton.addActionListener(e ->
+        {
+            this.getContentPane().removeAll();
+            displayOptions();
+        });
 
-        switch (userInput) {
-            case "1":
-                items.add(new Ramen("Tonkotsu Ramen"));
-                System.out.println("1 Tonkotsu Ramen added to your order");
-                break;
-            case "2":
-                items.add(new Ramen("Red Garlic Tonkotsu Ramen"));
-                System.out.println("1 Red Garlic Tonkotsu Ramen added to your order");
-                break;
-            case "3":
-                items.add(new Ramen("Black Garlic Tonkotsu Ramen"));
-                System.out.println("1. Black Garlic Tonkotsu Ramen added to your order");
-                break;
-            case "4":
-                items.add(new Ramen("Miso Ramen"));
-                System.out.println("1 Miso Ramen added to your order");
-                break;
-            default:
-                break;
-        }
+        welcomeButton.setText("""
+                <html><center>
+                Welcome To Ichiraku Order Now<br>
+                一楽ラーメン
+                </center></html>
+                """);
+        welcomeButton.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
+        this.add(welcomeButton);
+        this.revalidate();
+        this.repaint();
 
-        userInput = getValidatedInput("""
-                ========================================
-                            Select A Bowl Size
-                                1. Small        +$2.00
-                                2. Medium       +$3.00
-                                3. Large        +$4.00
-                =========================================\n""", "1", "2", "3");
-
-        if (items.get(items.size() - 1) instanceof Ramen) {
-            switch (userInput) {
-                case "1":
-                    ((Ramen) items.get(items.size() - 1)).addRamenSize(1);
-                    System.out.println("You selected Small for your bowl size");
-                    break;
-                case "2":
-                    ((Ramen) items.get(items.size() - 1)).addRamenSize(2);
-                    System.out.println("You selected Medium for your bowl size");
-                    break;
-                case "3":
-                    ((Ramen) items.get(items.size() - 1)).addRamenSize(3);
-                    System.out.println("You selected Large for your bowl size");
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        while (!userInput.equals("7")) {
-            userInput = getValidatedInput("""
-                    ==============================================
-                               Select Toppings
-                        1. Extra Noodles                    +$1.50
-                        2. Extra Chashu 2 Pieces            +$2.00
-                        3. Extra Soft Boiled Egg            +$1.00
-                        4. Whole Fried Garlic (premium)     +$4.00
-                        5. Bamboo Shoots (premium)          +$4.00
-                        6. Wagyu Beef (premium)             +$4.00
-                        7. Exit Toppings List
-                    ==============================================\n""", "1", "2", "3", "4", "5", "6", "7");
-
-            if (items.get(items.size() - 1) instanceof Ramen) {
-                switch (userInput) {
-                    case "1":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(1);
-                        System.out.println("Extra noodles added");
-                        break;
-                    case "2":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(2);
-                        System.out.println("Extra Chashu 2 pieces added");
-                        break;
-                    case "3":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(3);
-                        System.out.println("Extra soft boiled egg added");
-                        break;
-                    case "4":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(4);
-                        System.out.println("Premium whole fried garlic added");
-                        break;
-                    case "5":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(5);
-                        System.out.println("Premium bamboo shoots added");
-                        break;
-                    case "6":
-                        ((Ramen) items.get(items.size() - 1)).addToppings(6);
-                        System.out.println("Premium wagyu beef added");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        order.addMenuItem(items.get(items.size() - 1));
-        System.out.println("Your ramen has been added to your order");
     }
 
-    // Method creates an appetizer object to be passed into the order list later on
-    // Users can order as many appetizers as they would like and finish ordering by pressing 7
-    private void orderAppetizer() {
 
-        userInput = "";
-        while (!userInput.equals("7")) {
-            userInput = getValidatedInput("""
-                    ==========================================
-                    Select An Appetizer
-                    
-                    1. Gyoza 6 Pieces               $8.00
-                    2. Takoyaki 8 Pieces            $10.00
-                    3. Edamame                      $6.00
-                    4. Wakame Salad                 $5.50
-                    5. Squid Karaage                $12.00
-                    6. Chicken Karaage              $7.00
-                    7. Exit Appetizer List
-                    ==========================================\n""", "1", "2", "3", "4", "5", "6", "7");
+    private void displayOptions() {
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
-            switch (userInput) {
-                case "1":
-                    items.add(new Appetizer("gyoza"));
-                    System.out.println("Gyoza has been added to your order");
-                    break;
-                case "2":
-                    items.add(new Appetizer("takoyaki"));
-                    System.out.println("Takoyaki has been added to your order");
-                    break;
-                case "3":
-                    items.add(new Appetizer("edamame"));
-                    System.out.println("Edamame has been added to your order");
-                    break;
-                case "4":
-                    items.add(new Appetizer("wakame salad"));
-                    System.out.println("Wakame Salad has been added to your order");
-                    break;
-                case "5":
-                    items.add(new Appetizer("squid karaage"));
-                    System.out.println("Squid Karaage has been added to your order");
-                    break;
-                case "6":
-                    items.add(new Appetizer("chicken karaage"));
-                    System.out.println("Chicken Karaage has been added to your order");
-                    break;
-                default:
-                    break;
+        // Add Title to display and set color and alignment
+        // add the title to the menupanel
+        JLabel title = new JLabel("<html><center>Ichiraku Ramen<br>一楽ラーメン</center></html>", SwingConstants.CENTER);
+        title.setForeground(new Color(212, 175, 55)); // RGB for gold
+        title.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuPanel.add(title);
+        menuPanel.add(Box.createVerticalStrut(-30));
+
+        // New panel for buttons and new buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 50));
+        buttonPanel.setPreferredSize(new Dimension(200,200));
+        JButton ramenButton = new JButton("Ramen");
+        JButton appetizerButton = new JButton("Appetizers");
+        JButton drinkButton = new JButton("Drinks");
+        JButton placeOrderButton = new JButton("Pay");
+        JButton cancelButton = new JButton("Cancel Order");
+
+        // Set button fonts
+        Font btnFont = new Font("MS UI Gothic", Font.BOLD, 20);
+        ramenButton.setFont(btnFont);
+        appetizerButton.setFont(btnFont);
+        drinkButton.setFont(btnFont);
+        placeOrderButton.setFont(btnFont);
+        cancelButton.setFont(btnFont);
+
+        // Add buttons to button panel
+        buttonPanel.add(ramenButton);
+        buttonPanel.add(appetizerButton);
+        buttonPanel.add(drinkButton);
+        buttonPanel.add(placeOrderButton);
+        buttonPanel.add(cancelButton);
+
+        // Add button panel to main panel
+        menuPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Display in frame
+        this.getContentPane().removeAll();
+        this.add(menuPanel);
+        this.revalidate();
+        this.repaint();
+
+        ramenButton.addActionListener(e -> {
+            this.getContentPane().removeAll();
+            menuPanel.remove(1);
+            orderRamen();
+        });
+        appetizerButton.addActionListener(e -> {
+            this.getContentPane().removeAll();
+            //orderAppetizer();
+        });
+        drinkButton.addActionListener(e -> {
+            this.getContentPane().removeAll();
+            //orderDrink();
+        });
+        cancelButton.addActionListener(e -> {
+            this.getContentPane().removeAll();
+            if (!order.getOrderList().isEmpty()) {
+                order.getOrderList().clear();
             }
-            if (!userInput.equals("7")) {
-                order.addMenuItem(items.get(items.size() - 1));
-            }
+            welcomeScreen();
+        });
+    }
+
+    public void orderRamen() {
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BorderLayout());
+        JLabel title = new JLabel("<html><center>Ichiraku Ramen<br>一楽ラーメン</center></html>", SwingConstants.CENTER);
+        title.setForeground(new Color(212, 175, 55)); // RGB for gold
+        title.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titlePanel.add(title, BorderLayout.NORTH);
+
+        this.add(title);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
     }
 
-    // Method creates a drink object to be passed into the order list later on
-    // users can order as many drinks as they would like and finish ordering by pressing 6
-    private void orderDrink() {
-        while (!userInput.equals("6")) {
-            userInput = getValidatedInput("""
-                    ====================================
-                    Select A Drink
-                    
-                    1. Sake                     $8.00
-                    2. Green Tea                $2.00
-                    3. Water                    $FREE
-                    4. Coke                     $3.00
-                    5. Sprite                   $3.00
-                    6. Exit Drink List
-                    =====================================
-                    """, "1", "2", "3", "4", "5", "6");
-
-            if (!userInput.equals("6")) {
-                switch (userInput) {
-                    case "1":
-                        items.add(new Drink("sake"));
-                        System.out.println("Sake added to your order");
-                        break;
-                    case "2":
-                        items.add(new Drink("green tea"));
-                        System.out.println("Green Tea added to your order");
-                        break;
-                    case "3":
-                        items.add(new Drink("water"));
-                        System.out.println("Water added to your order");
-                        break;
-                    case "4":
-                        items.add(new Drink("coke"));
-                        System.out.println("Coke added to your order");
-                        break;
-                    case "5":
-                        items.add(new Drink("sprite"));
-                        System.out.println("Sprite added to your order");
-                        break;
-                    default:
-                        break;
-                }
-                order.addMenuItem(items.get(items.size() - 1));
-            }
-            if (!userInput.equals("6")) {
-                userInput = getValidatedInput("""
-                        ========================================
-                                    Select A Drink Size
-                                        1. Small        +$1.00
-                                        2. Medium       +$2.00
-                                        3. Large        +$3.00
-                        =========================================\n""", "1", "2", "3");
-
-                if (items.get(items.size() - 1) instanceof Drink) {
-                    switch (userInput) {
-                        case "1":
-                            ((Drink) items.get(items.size() - 1)).addSize(1);
-                            System.out.println("You selected small drink size");
-                            break;
-                        case "2":
-                            ((Drink) items.get(items.size() - 1)).addSize(2);
-                            System.out.println("You selected medium drink size");
-                            break;
-                        case "3":
-                            ((Drink) items.get(items.size() - 1)).addSize(3);
-                            System.out.println("You selected large drink size");
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    // Method creates the receipt for the user displaying all items they have purchased
-    // Outputs the total cost of the items purchased
-    private void checkout() {
-
-        System.out.printf("""
-                ========================================
-                            Getting Total
-                ========================================\n""");
-
-        loadingTime();
-
-        getOrderDetails();
-        userInput = getValidatedInput("""
-                ==========================
-                     1. Confirm Order
-                     2. Cancel Order
-                ==========================\n""", "1", "2");
-        if (userInput.equals("1")) {
-            fileManager.printReceipt(order);
-            userInput = "5";
-            System.out.printf("""
-                    =============================================
-                         Purchase complete have a nice day
-                    =============================================\n""");
-            loadingTime();
-        } else {
-            userInput = "5";
-            System.out.printf("""
-                    ===============================
-                           Cancelling Order
-                    ===============================\n""");
-            loadingTime();
-        }
-    }
-
-    // Method adds a bit of loading time so the user has time to process output
-    private void loadingTime() {
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println("Error with loading time");
-        }
-    }
-
-    /* Helper method to check if inputs are valid, before a lot of code was being copy pasted
-    around to validate input. Asked ChatGPT to see if there was a better way and gave this helper
-    method */
-    private String getValidatedInput(String prompt, String... validOptions) {
-        System.out.printf("%s", prompt);
-        String input = read.nextLine();
-
-        while (!Arrays.asList(validOptions).contains(input)) {
-            System.out.printf("Please enter a valid number ");
-            input = read.nextLine();
-        }
-
-        return input;
-    }
-
-    // Helper method to get the order details of the user
-    private void getOrderDetails() {
-        LocalDate today = LocalDate.now();
-        StringBuilder ramenName = new StringBuilder();
-        StringBuilder toppingName = new StringBuilder();
-        int counter = 0;
-        StringBuilder drinkName = new StringBuilder();
-
-        System.out.printf("====================================================\n");
-
-        for (MenuItem item : order.getOrderList()) {
-            if (item instanceof Ramen) {
-                ramenName.append(String.format("%-43s $%.2f\n", item + " (" + ((Ramen) item).getSize() + ")", ((Ramen) item).getBasePrice()));
-                System.out.printf("%s", ramenName);
-
-                if (((Ramen) item).getToppingsList().isEmpty()) {
-                    System.out.printf(" -No Toppings Added\n");
-                } else {
-                    for (String topping : ((Ramen) item).getToppingsList()) {
-                        toppingName.append(String.format(" - %-40s $%.2f\n", topping, ((Ramen) item).getToppingPrice(counter)));
-                        System.out.printf("%s", toppingName);
-                        counter++;
-                        toppingName.setLength(0);
-                    }
-                }
-
-            } else if (item instanceof Appetizer) {
-                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
-            } else if (item instanceof Drink) {
-                drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
-                System.out.printf("%s", drinkName);
-            }
-            counter = 0;
-            ramenName.setLength(0);
-            toppingName.setLength(0);
-        }
-        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
-            System.out.printf("\n\nFriday Discount Total: $%.2f\n\n", order.getOrderTotal().doubleValue());
-        } else {
-            System.out.printf("\n\nTotal: $%.2f\n\n", order.getOrderTotal().doubleValue());
-        }
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }
