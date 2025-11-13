@@ -1,5 +1,7 @@
 package com.pluralsight.models;
 
+import com.pluralsight.util.Discountable;
+
 import java.math.*;
 import java.time.*;
 import java.util.*;

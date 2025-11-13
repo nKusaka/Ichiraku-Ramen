@@ -50,7 +50,7 @@ public class UserInterface {
                                   1. Order Ramen
                                   2. Order Appetizers
                                   3. Order Drinks
-                                  4. Finished Ordering
+                                  4. Checkout
                                   5. Cancel Order
                     ===============================================\n""", "1", "2", "3", "4", "5");
 
@@ -76,7 +76,7 @@ public class UserInterface {
                         loadingTime();
                     } else {
                         loadingTime();
-                        getReceipt();
+                        checkout();
                         break;
                     }
                 case "5":
@@ -297,7 +297,7 @@ public class UserInterface {
 
     // Method creates the receipt for the user displaying all items they have purchased
     // Outputs the total cost of the items purchased
-    private void getReceipt() {
+    private void checkout() {
 
         System.out.printf("""
                 ===============================================

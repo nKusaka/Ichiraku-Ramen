@@ -1,4 +1,4 @@
-package com.pluralsight.models;
+package com.pluralsight.util;
 import java.math.*;
 
 // Interface allows items to be discountable
