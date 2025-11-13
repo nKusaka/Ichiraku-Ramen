@@ -1,19 +1,19 @@
-package com.pluralsight;
+package com.pluralsight.util;
+
+import com.pluralsight.models.*;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 // File manager to save orders as receipts in receipts.txt
 public class FileManager {
-    private String fileName = "receipts.txt";
+    private String fileName = "C:\\PluralSight\\Capstones\\Capstone2\\IchirakuRamen\\receipts\\";
+    private DateTimeFormatter fileFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
     int counter = 1;
 
@@ -24,7 +24,7 @@ public class FileManager {
         StringBuilder ramenName = new StringBuilder();
         StringBuilder toppingName = new StringBuilder();
         int counter = 0;
-
+        fileName += "receipt" + LocalDateTime.now().format(fileFormatter) + ".txt";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             bufferedWriter.write(String.format("                  Ichiraku Ramen\n                 123 Ramen Street\n\n"));
             bufferedWriter.write(String.format("%s \n", LocalDateTime.now().format(formatter)));

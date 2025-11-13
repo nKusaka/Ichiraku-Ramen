@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.models;
 import java.math.*;
 
 // This abstract class is used as a template for all menu items. It gives them a name and a price

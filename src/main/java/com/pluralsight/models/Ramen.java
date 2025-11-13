@@ -1,4 +1,5 @@
-package com.pluralsight;
+package com.pluralsight.models;
+
 import java.math.*;
 import java.time.*;
 import java.util.*;

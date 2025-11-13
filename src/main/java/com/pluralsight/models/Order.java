@@ -1,5 +1,4 @@
-package com.pluralsight;
-import java.io.IOException;
+package com.pluralsight.models;
 import java.math.*;
 import java.util.*;
 
