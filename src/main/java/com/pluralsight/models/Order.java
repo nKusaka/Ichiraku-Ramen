@@ -21,21 +21,6 @@ public class Order {
         orderList.add(menuItem);
     }
 
-    // Method will get the first item in the list and return it
-    public MenuItem getFirst() {
-        return orderList.get(0);
-    }
-
-    // Method will get the last item in the list and return it
-    public MenuItem getLast() {
-        return orderList.get(orderList.size() - 1);
-    }
-
-    // Method adds multiple items from a list of menu items to the orderList
-    public void addMenuItem(List<MenuItem> menuItems) {
-        orderList.addAll(menuItems);
-    }
-
     // Method calculates the total cost of the order and returns it
     public BigDecimal getOrderTotal() {
         BigDecimal orderTotal = BigDecimal.ZERO;
@@ -52,15 +37,5 @@ public class Order {
         return orderList;
     }
 
-    public void setOrderList(List<MenuItem> orderList) {
-        this.orderList = orderList;
-    }
 
-    // Helper method to convert order total to string when writing to file: receipt.csv
-    public String toCSV() {
-        StringBuilder csv = new StringBuilder();
-
-        csv.append(String.format("%.2f", getOrderTotal().doubleValue()));
-        return csv.toString();
-    }
 }

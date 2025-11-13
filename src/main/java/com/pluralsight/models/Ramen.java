@@ -146,16 +146,8 @@ public class Ramen extends MenuItem implements Discountable {
         return toppingsList;
     }
 
-    public void setToppingsList(List<String> toppingsList) {
-        this.toppingsList = toppingsList;
-    }
-
     public String getSize() {
         return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     // Overrided toString to output the type of ramen with bowl size and toppings
