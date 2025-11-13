@@ -308,7 +308,7 @@ public class UserInterface {
 
         for (MenuItem item : order.getOrderList()) {
             if (item instanceof Ramen) {
-                System.out.printf("%s", item);
+                System.out.printf("%-40s $%.2f", item, item.getPrice());
             } else if (item instanceof Appetizer) {
                 System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
             } else if (item instanceof Drink) {

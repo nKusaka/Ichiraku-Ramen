@@ -138,6 +138,31 @@ public class Ramen extends MenuItem implements Discountable {
         }
     }
 
+    // Gets the value of just the ramen type and bowl price
+    public BigDecimal getBasePrice() {
+        return ramenPrice;
+    }
+
+    // Get the value of each topping
+    public BigDecimal getToppingPrice(int counter) {
+        String topping;
+        for (int i = counter; i < getToppingsList().size(); i++) {
+            switch (toppingsList.get(i)) {
+                case "extra noodles":
+                    return BigDecimal.valueOf(4);
+                case "chashu 2 pieces":
+                    return BigDecimal.valueOf(1.50);
+                case "soft boiled egg":
+                    return BigDecimal.valueOf(1);
+                case "whole fried garlic":
+                    return BigDecimal.valueOf(2.50);
+                case "bamboo shoots":
+                    return BigDecimal.valueOf(3);
+            }
+        }
+        return BigDecimal.valueOf(0);
+    }
+
     // Getters and Setters
     public List<String> getToppingsList() {
         return toppingsList;
@@ -158,18 +183,6 @@ public class Ramen extends MenuItem implements Discountable {
     // Overrided toString to output the type of ramen with bowl size and toppings
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" (").append(size).append(")").append("\n");
-
-        if (toppingsList.isEmpty()) {
-            sb.append("No toppings\n");
-        } else {
-            sb.append("Toppings:\n");
-            for (String topping : toppingsList) {
-                sb.append("   - ").append(topping).append("\n");
-            }
-        }
-
-        return sb.toString();
+        return name;
     }
 }
