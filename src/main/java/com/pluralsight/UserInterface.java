@@ -89,7 +89,7 @@ public class UserInterface {
             }
         }
 
-        fileManager.saveToFile(order);
+        fileManager.printReceipt(order);
         items.clear();
     }
 
@@ -320,8 +320,6 @@ public class UserInterface {
                 
                 Have a great day!
                 ==================================================\n""", order.getOrderTotal().doubleValue());
-
-        order.getOrderList().clear();
     }
 
     // Method adds a bit of loading time so the user has time to process output

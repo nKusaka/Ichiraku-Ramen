@@ -16,10 +16,10 @@ public class FileManager {
     int counter = 1;
     // Method saves the orders to a receipt
     public void printReceipt(Order order) {
-        File file = new File(fileName);
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
-            bufferedWriter.write(String.format("                Ichiraku Ramen\n,                123 Ramen Street\n"));
+            bufferedWriter.write(String.format("                 Ichiraku Ramen\n                123 Ramen Street\n"));
+
             for (MenuItem item: order.getOrderList()) {
                 if (item instanceof Ramen) {
                     bufferedWriter.write(String.format("%s", item));
@@ -29,6 +29,8 @@ public class FileManager {
                     bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
                 }
             }
+
+            bufferedWriter.write(String.format("\n\nTotal: $%.2f\n\nHave a great day!", order.getOrderTotal().doubleValue()));
 
         } catch (IOException e) {
             System.out.println("Issue writing to file: " + e.getMessage());
