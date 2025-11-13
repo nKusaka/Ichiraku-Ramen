@@ -11,7 +11,6 @@ public class UserInterface {
     static String userInput = "";
     private List<MenuItem> items = new ArrayList<>();
     private Order order;
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
     static FileManager fileManager = new FileManager();
 
     // Method creates the welcome screen for the user
@@ -300,26 +299,16 @@ public class UserInterface {
     private void getReceipt() {
 
         System.out.printf("""
-                =================================================
+                ===============================================
                             Printing Receipt\n""");
 
         loadingTime();
-        System.out.printf("%s\n", LocalDateTime.now().format(formatter));
 
-        for (MenuItem item : order.getOrderList()) {
-            if (item instanceof Ramen) {
-                System.out.printf("%-40s $%.2f", item, item.getPrice());
-            } else if (item instanceof Appetizer) {
-                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
-            } else if (item instanceof Drink) {
-                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
-            }
-        }
         System.out.printf("""
-                \n\nTotal: $%.2f
-                
-                Have a great day!
-                ==================================================\n""", order.getOrderTotal().doubleValue());
+                            \n\nHave a great day!
+                ===============================================\n""", order.getOrderTotal().doubleValue());
+
+        loadingTime();
     }
 
     // Method adds a bit of loading time so the user has time to process output
