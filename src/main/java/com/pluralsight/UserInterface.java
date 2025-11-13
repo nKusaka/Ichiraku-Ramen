@@ -12,8 +12,6 @@ import java.util.List;
 public class UserInterface extends JFrame implements KeyListener {
 
     // Variables that will be used throughout the class
-    static Scanner read = new Scanner(System.in);
-    static String userInput = "";
     private List<MenuItem> items = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
@@ -33,7 +31,7 @@ public class UserInterface extends JFrame implements KeyListener {
         welcomeButton.addActionListener(e ->
         {
             frame.getContentPane().removeAll();
-            displayMenu();
+            displayOptions();
         });
 
         // Setting text font and adding button to the jframe
@@ -51,7 +49,7 @@ public class UserInterface extends JFrame implements KeyListener {
 
     // Method creates the menu screen for the user and moves to the appropriate screen after
     // taking in users input
-    private void displayMenu() {
+    private void displayOptions() {
         // Main panel with BorderLayout
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -72,18 +70,13 @@ public class UserInterface extends JFrame implements KeyListener {
         JButton placeOrderButton = new JButton("Pay");
         JButton cancelButton = new JButton("Cancel Order");
 
-        // Background Panel for Title
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.setBounds(0,0,1920,300);
-        backgroundPanel.setBackground(Color.BLACK);
-
         // Set button fonts
         Font btnFont = new Font("MS UI Gothic", Font.BOLD, 20);
         ramenButton.setFont(btnFont);
         appetizerButton.setFont(btnFont);
         drinkButton.setFont(btnFont);
         placeOrderButton.setFont(btnFont);
-        cancelButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+        cancelButton.setFont(btnFont);
 
         // Add buttons to button panel
         buttonPanel.add(ramenButton);
@@ -117,8 +110,8 @@ public class UserInterface extends JFrame implements KeyListener {
             frame.getContentPane().removeAll();
             if (!orders.isEmpty()) {
                 orders.remove(orders.size() - 1);
-                welcomeScreen();
             }
+            welcomeScreen();
         });
     }
 
@@ -126,103 +119,36 @@ public class UserInterface extends JFrame implements KeyListener {
     // Method creates a Ramen object to be passed into the order list later on
     // Users can customize their ramen by type, bowl size, and toppings if they would like
     private void orderRamen() {
-//
-//        userInput = getValidatedInput("""
-//                ================================================
-//                        Select A Type Of Ramen
-//                        1. Tonkotsu Ramen                $12.00
-//                        2. Red Garlic Tonkotsu Ramen     $14.00
-//                        3. Black Garlic Tonkotsu Ramen   $16.00
-//                        4. Miso Tonkotsu Ramen           $12.00
-//                ================================================\n""", "1", "2", "3", "4");
-//
-//        switch (userInput) {
-//            case "1":
-//                items.add(new Ramen("Tonkotsu Ramen"));
-//                System.out.println("1 Tonkotsu Ramen added to your order");
-//                break;
-//            case "2":
-//                items.add(new Ramen("Red Garlic Tonkotsu Ramen"));
-//                System.out.println("1 Red Garlic Tonkotsu Ramen added to your order");
-//                break;
-//            case "3":
-//                items.add(new Ramen("Black Garlic Tonkotsu Ramen"));
-//                System.out.println("1. Black Garlic Tonkotsu Ramen added to your order");
-//                break;
-//            case "4":
-//                items.add(new Ramen("Miso Ramen"));
-//                System.out.println("1 Miso Ramen added to your order");
-//                break;
-//            default:
-//                break;
-//        }
-//
-//        userInput = getValidatedInput("""
-//                ========================================
-//                            Select A Bowl Size
-//                                1. Small        +$2.00
-//                                2. Medium       +$3.00
-//                                3. Large        +$4.00
-//                =========================================\n""", "1", "2", "3");
-//
-//        if (items.get(items.size() - 1) instanceof Ramen) {
-//            switch (userInput) {
-//                case "1":
-//                    ((Ramen) items.get(items.size() - 1)).addRamenSize(1);
-//                    System.out.println("You selected Small for your bowl size");
-//                    break;
-//                case "2":
-//                    ((Ramen) items.get(items.size() - 1)).addRamenSize(2);
-//                    System.out.println("You selected Medium for your bowl size");
-//                    break;
-//                case "3":
-//                    ((Ramen) items.get(items.size() - 1)).addRamenSize(3);
-//                    System.out.println("You selected Large for your bowl size");
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//
-//        while (!userInput.equals("6")) {
-//            userInput = getValidatedInput("""
-//                    ==============================================
-//                               Select Toppings
-//                               1. Extra Noodles            +$4.00
-//                               2. Extra Chashu 2 Pieces    +$1.50
-//                               3. Extra Soft Boiled Egg    +$1.00
-//                               4. Whole Fried Garlic       +$2.50
-//                               5. Bamboo Shoots            +$3.00
-//                               6. Exit Toppings List
-//                    ==============================================\n""", "1", "2", "3", "4", "5", "6");
-//
-//            if (items.get(items.size() - 1) instanceof Ramen) {
-//                switch (userInput) {
-//                    case "1":
-//                        ((Ramen) items.get(items.size() - 1)).addToppings(1);
-//                        System.out.println("Extra noodles added");
-//                        break;
-//                    case "2":
-//                        ((Ramen) items.get(items.size() - 1)).addToppings(2);
-//                        System.out.println("Extra Chashu 2 pieces added");
-//                        break;
-//                    case "3":
-//                        ((Ramen) items.get(items.size() - 1)).addToppings(3);
-//                        System.out.println("Extra soft boiled egg added");
-//                        break;
-//                    case "4":
-//                        ((Ramen) items.get(items.size() - 1)).addToppings(4);
-//                        System.out.println("Extra whole fried garlic added");
-//                        break;
-//                    case "5":
-//                        ((Ramen) items.get(items.size() - 1)).addToppings(5);
-//                        System.out.println("Extra bamboo shoots added");
-//                        break;
-//                }
-//            }
-//        }
-//        orders.get(orders.size() - 1).addMenuItem(items.get(items.size() - 1));
-//        System.out.println("Your ramen has been added to your order");
+
+        // Creates buttons for ramen menu
+        JButton tonkotsuButton = new JButton();
+        JButton blackGarlicButton = new JButton();
+        JButton redGarlicButton = new JButton();
+        JButton misoButton = new JButton();
+
+        // Create Panel for ramen menu below and on top of menuPanel
+        JPanel ramenPanel = new JPanel();
+        ramenPanel.setLayout(new BoxLayout(ramenPanel, BoxLayout.Y_AXIS));
+        ramenPanel.setBounds(0,810,1920,1080);
+
+        // Set button fonts
+        Font btnFont = new Font("MS UI Gothic", Font.BOLD, 100);
+        tonkotsuButton.setFont(btnFont);
+        blackGarlicButton.setFont(btnFont);
+        redGarlicButton.setFont(btnFont);
+        misoButton.setFont(btnFont);
+
+        // Add buttons to ramen panel
+        ramenPanel.add(tonkotsuButton);
+        ramenPanel.add(blackGarlicButton);
+        ramenPanel.add(redGarlicButton);
+        ramenPanel.add(misoButton);
+
+        // Add ramen panel to frame
+        frame.add(ramenPanel);
+        frame.repaint();
+        frame.revalidate();
+
     }
 
     //
