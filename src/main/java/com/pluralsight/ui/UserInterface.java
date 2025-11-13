@@ -292,6 +292,34 @@ public class UserInterface {
                 }
                 order.addMenuItem(items.get(items.size() - 1));
             }
+            if (!userInput.equals("6")) {
+                userInput = getValidatedInput("""
+                        ========================================
+                                    Select A Drink Size
+                                        1. Small        +$1.00
+                                        2. Medium       +$2.00
+                                        3. Large        +$3.00
+                        =========================================\n""", "1", "2", "3");
+
+                if (items.get(items.size() - 1) instanceof Drink) {
+                    switch (userInput) {
+                        case "1":
+                            ((Drink) items.get(items.size() - 1)).addSize(1);
+                            System.out.println("You selected small drink size");
+                            break;
+                        case "2":
+                            ((Drink) items.get(items.size() - 1)).addSize(2);
+                            System.out.println("You selected medium drink size");
+                            break;
+                        case "3":
+                            ((Drink) items.get(items.size() - 1)).addSize(3);
+                            System.out.println("You selected large drink size");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
 

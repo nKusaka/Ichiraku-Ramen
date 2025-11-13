@@ -25,6 +25,8 @@ public class FileManager {
         StringBuilder toppingName = new StringBuilder();
         int counter = 0;
         fileName += "receipt" + LocalDateTime.now().format(fileFormatter) + ".txt";
+        StringBuilder drinkName = new StringBuilder();
+
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             bufferedWriter.write(String.format("                  Ichiraku Ramen\n                 123 Ramen Street\n\n"));
             bufferedWriter.write(String.format("%s \n", LocalDateTime.now().format(formatter)));
@@ -49,7 +51,8 @@ public class FileManager {
                 } else if (item instanceof Appetizer) {
                     bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
                 } else if (item instanceof Drink) {
-                    bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
+                    drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
+                    bufferedWriter.write(String.valueOf(drinkName));
                 }
                 counter = 0;
                 ramenName.setLength(0);
