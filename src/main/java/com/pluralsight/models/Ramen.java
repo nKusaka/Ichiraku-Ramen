@@ -72,56 +72,29 @@ public class Ramen extends MenuItem implements Discountable {
         switch (topping) {
             case 1:
                 toppingsList.add("extra noodles");
-                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
+                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(1.50));
                 break;
             case 2:
                 toppingsList.add("chashu 2 pieces");
-                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(1.50));
+                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(2));
                 break;
             case 3:
                 toppingsList.add("soft boiled egg");
                 toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(1));
                 break;
             case 4:
-                toppingsList.add("whole fried garlic");
-                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(2.50));
+                toppingsList.add("whole fried garlic (premium)");
+                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
                 break;
             case 5:
-                toppingsList.add("bamboo shoots");
-                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(3));
+                toppingsList.add("bamboo shoots (premium)");
+                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
                 break;
+            case 6:
+                toppingsList.add("wagyu beef (premium)");
+                toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
             default:
                 break;
-        }
-    }
-
-    // Overloaded method to add multiple toppings to the list at the same time instead of 1 by 1
-    public void addToppings(List<Integer> multipleToppings) {
-        for (Integer t : multipleToppings) {
-            switch (t) {
-                case 1:
-                    toppingsList.add("extra noodles");
-                    toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(4));
-                    break;
-                case 2:
-                    toppingsList.add("chashu 2 pieces");
-                    toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(1.50));
-                    break;
-                case 3:
-                    toppingsList.add("soft boiled egg");
-                    toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(1));
-                    break;
-                case 4:
-                    toppingsList.add("whole fried garlic");
-                    toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(2.50));
-                    break;
-                case 5:
-                    toppingsList.add("bamboo shoots");
-                    toppingsPrice = toppingsPrice.add(BigDecimal.valueOf(3));
-                    break;
-                default:
-                    break;
-            }
         }
     }
 

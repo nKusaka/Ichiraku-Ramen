@@ -154,17 +154,18 @@ public class UserInterface {
             }
         }
 
-        while (!userInput.equals("6")) {
+        while (!userInput.equals("7")) {
             userInput = getValidatedInput("""
                     ==============================================
                                Select Toppings
-                               1. Extra Noodles            +$4.00
-                               2. Extra Chashu 2 Pieces    +$1.50
-                               3. Extra Soft Boiled Egg    +$1.00
-                               4. Whole Fried Garlic       +$2.50
-                               5. Bamboo Shoots            +$3.00
-                               6. Exit Toppings List
-                    ==============================================\n""", "1", "2", "3", "4", "5", "6");
+                        1. Extra Noodles                    +$1.50
+                        2. Extra Chashu 2 Pieces            +$2.00
+                        3. Extra Soft Boiled Egg            +$1.00
+                        4. Whole Fried Garlic (premium)     +$4.00
+                        5. Bamboo Shoots (premium)          +$4.00
+                        6. Wagyu Beef (premium)             +$4.00
+                        7. Exit Toppings List
+                    ==============================================\n""", "1", "2", "3", "4", "5", "6","7");
 
             if (items.get(items.size() - 1) instanceof Ramen) {
                 switch (userInput) {
@@ -182,11 +183,17 @@ public class UserInterface {
                         break;
                     case "4":
                         ((Ramen) items.get(items.size() - 1)).addToppings(4);
-                        System.out.println("Extra whole fried garlic added");
+                        System.out.println("Premium whole fried garlic added");
                         break;
                     case "5":
                         ((Ramen) items.get(items.size() - 1)).addToppings(5);
-                        System.out.println("Extra bamboo shoots added");
+                        System.out.println("Premium bamboo shoots added");
+                        break;
+                    case "6":
+                        ((Ramen) items.get(items.size() - 1)).addToppings(6);
+                        System.out.println("Premium wagyu beef added");
+                        break;
+                    default:
                         break;
                 }
             }
