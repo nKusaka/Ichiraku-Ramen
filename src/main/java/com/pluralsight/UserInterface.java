@@ -13,7 +13,7 @@ public class UserInterface {
     private Order order;
     static FileManager fileManager = new FileManager();
 
-    // Method creates the welcome screen for the user
+    // Method creates the welcome screen for the users
     public void welcomeScreen() {
 
         while (!userInput.equals("2")) {
