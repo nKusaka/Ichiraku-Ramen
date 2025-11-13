@@ -15,7 +15,6 @@ public class FileManager {
     private String fileName = "C:\\PluralSight\\Capstones\\Capstone2\\IchirakuRamen\\receipts\\";
     private DateTimeFormatter fileFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
-    int counter = 1;
 
     // Method saves the orders to a receipt
     public void printReceipt(Order order) {
