@@ -45,6 +45,7 @@
 *Example Receipt
 <img width="720" height="480" alt="image" src="https://github.com/user-attachments/assets/9ccf1b67-b1f9-4509-9099-295fbbde33cd" />
 
+
 ## Interesting Piece of Code
 This piece of code acts as a way for menu items to be discounted. Each item can interpret the way it wants to discount
 its items.
