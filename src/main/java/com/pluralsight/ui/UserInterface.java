@@ -1,15 +1,20 @@
 package com.pluralsight.ui;
 
 import com.pluralsight.models.Order;
+import com.pluralsight.util.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.*;
+import java.util.List;
 
 public class UserInterface extends JFrame implements KeyListener {
     private JButton welcomeButton;
     private Order order;
+    private List<MenuItem> items = new ArrayList<>();
+    static FileManager fileManager = new FileManager();
 
     public UserInterface() {
         ImageIcon logo = new ImageIcon("logo.png");
@@ -122,18 +127,79 @@ public class UserInterface extends JFrame implements KeyListener {
         });
     }
 
+    // Lets the user order ramen types
     public void orderRamen() {
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new BorderLayout());
-        JLabel title = new JLabel("<html><center>Ichiraku Ramen<br>一楽ラーメン</center></html>", SwingConstants.CENTER);
-        title.setForeground(new Color(212, 175, 55)); // RGB for gold
+
+        // main panel everything is on
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        // redraw title panel
+        JLabel title = new JLabel("Select Type Of Ramen");
+        title.setForeground(Color.BLACK);
         title.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titlePanel.add(title, BorderLayout.NORTH);
 
-        this.add(title);
+        JPanel titlePanel = new JPanel();
+        titlePanel.add(title);
+
+        // create and add buttons to panel
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 0, 0));
+
+        Font btnFont = new Font("MS UI Gothic", Font.BOLD, 40);
+
+        JButton tonkotsu = new JButton("Tonkotsu Ramen");
+        JButton redGarlic = new JButton("Red Garlic Tonkotsu Ramen");
+        JButton blackGarlic = new JButton("Black Garlic Tonkotsu Ramen");
+        JButton miso = new JButton("Miso Ramen");
+
+        tonkotsu.setFont(btnFont);
+        redGarlic.setFont(btnFont);
+        blackGarlic.setFont(btnFont);
+        miso.setFont(btnFont);
+
+        buttonPanel.add(tonkotsu);
+        buttonPanel.add(redGarlic);
+        buttonPanel.add(blackGarlic);
+        buttonPanel.add(miso);
+
+        // add panels
+        mainPanel.add(titlePanel,BorderLayout.NORTH);
+        mainPanel.add(Box.createVerticalStrut(10));   // spacing
+        mainPanel.add(buttonPanel);
+
+        this.getContentPane().removeAll();
+        this.add(mainPanel);
         this.revalidate();
         this.repaint();
+
+        tonkotsu.addActionListener(e ->
+        {
+
+            this.getContentPane().removeAll();
+            getToppings();
+        });
+
+        redGarlic.addActionListener(e->
+        {
+            this.getContentPane().removeAll();
+            getToppings();
+        });
+
+        blackGarlic.addActionListener(e->
+        {
+            this.getContentPane().removeAll();
+            getToppings();
+        });
+
+        miso.addActionListener(e ->
+        {
+            this.getContentPane().removeAll();
+            getToppings();
+        });
+    }
+
+    private void getToppings() {
 
     }
 
