@@ -36,6 +36,7 @@ public class FileManager {
                             toppingName.append(String.format(" - %-40s $%.2f\n", topping, ((Ramen) item).getToppingPrice(counter)));
                             bufferedWriter.write(String.valueOf(toppingName));
                             counter++;
+                            toppingName.setLength(0);
                         }
                     }
 
@@ -44,6 +45,7 @@ public class FileManager {
                 } else if (item instanceof Drink) {
                     bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
                 }
+                counter = 0;
                 ramenName.setLength(0);
                 toppingName.setLength(0);
             }
