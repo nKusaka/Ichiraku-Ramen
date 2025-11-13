@@ -22,7 +22,7 @@ public class FileManager {
 
             for (MenuItem item: order.getOrderList()) {
                 if (item instanceof Ramen) {
-                    bufferedWriter.write(String.format("%s", item));
+                    bufferedWriter.write(String.format("%s $%-40.2f", item, item.getPrice()));
                 } else if (item instanceof Appetizer) {
                     bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
                 } else if (item instanceof Drink) {
