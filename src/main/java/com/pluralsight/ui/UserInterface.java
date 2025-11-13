@@ -392,8 +392,7 @@ public class UserInterface {
         return input;
     }
 
-    // Helper method to print the receipt for the user
-
+    // Helper method to get the order details of the user
     private void getOrderDetails() {
         LocalDate today = LocalDate.now();
         StringBuilder ramenName = new StringBuilder();
