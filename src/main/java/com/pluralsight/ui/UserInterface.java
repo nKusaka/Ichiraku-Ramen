@@ -446,8 +446,7 @@ public class UserInterface {
                 System.out.printf("1x %-40s $%.2f\n", item, ((Appetizer) item).getBasePrice());
             } else if (item instanceof Drink) {
                 System.out.printf("1x %-40s $%.2f\n",
-                        item + " (" + ((Drink) item).getSize() + ")",
-                        ((Drink) item).getPrice());
+                        item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice());
             }
             counter = 0;
             ramenName.setLength(0);

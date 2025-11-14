@@ -52,9 +52,7 @@ public class FileManager {
                 } else if (item instanceof Drink) {
                     bufferedWriter.write(String.format(
                             "1x %-40s $%.2f\n",
-                            item + " (" + ((Drink) item).getSize() + ")",
-                            ((Drink) item).getPrice()
-                    ));
+                            item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
                 }
                 counter = 0;
                 ramenName.setLength(0);
