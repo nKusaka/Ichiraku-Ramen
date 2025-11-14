@@ -32,6 +32,22 @@ public class Order {
         return orderTotal;
     }
 
+    // Method calculates the total of discounted items
+    public BigDecimal getDiscountedTotal() {
+        BigDecimal discountedTotal = BigDecimal.ZERO;
+
+        for (MenuItem menuItem : orderList) {
+            if (menuItem instanceof Ramen) {
+                discountedTotal = discountedTotal.add(menuItem.getPrice());
+            }
+            if (menuItem instanceof Appetizer) {
+                discountedTotal = discountedTotal.add(menuItem.getPrice());
+            }
+        }
+
+        return discountedTotal;
+    }
+
     // Getters and Setters
     public List<MenuItem> getOrderList() {
         return orderList;

@@ -418,6 +418,8 @@ public class UserInterface {
         int counter = 0;
         StringBuilder drinkName = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
+        boolean hasApp = false;
+        boolean hasRamen = false;
 
         System.out.printf("                  Ichiraku Ramen\n                 123 Ramen Street\n\n");
         System.out.printf("%s \n", LocalDateTime.now().format(formatter));
@@ -443,15 +445,29 @@ public class UserInterface {
             } else if (item instanceof Appetizer) {
                 System.out.printf("1x %-40s $%.2f\n", item, ((Appetizer) item).getBasePrice());
             } else if (item instanceof Drink) {
-                drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
-                System.out.printf("%s", drinkName);
+                System.out.printf("1x %-40s $%.2f\n",
+                        item + " (" + ((Drink) item).getSize() + ")",
+                        ((Drink) item).getPrice());
             }
             counter = 0;
             ramenName.setLength(0);
             toppingName.setLength(0);
         }
-        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
-            System.out.printf("\n\nTotal Before Discount: $%.2f\nFriday Discount Total: $%.2f\n\n", (order.getOrderTotal().doubleValue() * 2), order.getOrderTotal().doubleValue());
+
+        for (MenuItem item: order.getOrderList()) {
+            if (item instanceof Ramen) {
+                hasRamen = true;
+                break;
+            }
+            if (item instanceof Appetizer) {
+                hasApp = true;
+                break;
+            }
+
+        }
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY && hasRamen || hasApp) {
+            System.out.printf("\n\nTotal Before Discount: $%.2f\nFriday Discount Total: $%.2f\n\n",
+                    (order.getDiscountedTotal().doubleValue() * 2) + (order.getOrderTotal().doubleValue() - order.getDiscountedTotal().doubleValue()), order.getOrderTotal().doubleValue());
         } else {
             System.out.printf("\n\nTotal: $%.2f\n\n", order.getOrderTotal().doubleValue());
         }
