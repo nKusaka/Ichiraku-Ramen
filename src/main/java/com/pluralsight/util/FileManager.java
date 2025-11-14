@@ -48,17 +48,21 @@ public class FileManager {
                     }
 
                 } else if (item instanceof Appetizer) {
-                    bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
+                    bufferedWriter.write(String.format("1x %-40s $%.2f\n", item, ((Appetizer) item).getBasePrice().doubleValue()));
                 } else if (item instanceof Drink) {
-                    drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
-                    bufferedWriter.write(String.valueOf(drinkName));
+                    bufferedWriter.write(String.format(
+                            "1x %-40s $%.2f\n",
+                            item + " (" + ((Drink) item).getSize() + ")",
+                            ((Drink) item).getPrice()
+                    ));
                 }
                 counter = 0;
                 ramenName.setLength(0);
                 toppingName.setLength(0);
             }
             if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                bufferedWriter.write(String.format("\n\nFriday Discount Total: $%.2f\n\nHave a great day!\n", order.getOrderTotal().doubleValue()));
+                bufferedWriter.write(String.format("\n\nTotal Before Discount: $%.2f\nFriday Discount Total: $%.2f\n\n",
+                        (order.getDiscountedTotal().doubleValue() * 2) + (order.getOrderTotal().doubleValue() - order.getDiscountedTotal().doubleValue()), order.getOrderTotal().doubleValue()));
             } else {
                 bufferedWriter.write(String.format("\n\nTotal: $%.2f\n\nHave a great day!\n", order.getOrderTotal().doubleValue()));
             }
