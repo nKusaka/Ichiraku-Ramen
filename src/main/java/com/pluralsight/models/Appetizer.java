@@ -54,6 +54,11 @@ public class Appetizer extends MenuItem implements Discountable {
         }
     }
 
+    // Returns the base price of the item without discount
+    public BigDecimal getBasePrice() {
+        return price;
+    }
+
     // toString to help output the Appetizer to the receipt later on
     @Override
     public String toString() {

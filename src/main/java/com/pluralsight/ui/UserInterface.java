@@ -342,10 +342,10 @@ public class UserInterface {
     private void checkout() {
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
             System.out.printf("""
-                ========================================
-                            Getting Total
-                  Today Is Friday Everything Is 50%% Off
-                ========================================\n""");
+                =================================================
+                                 Getting Total
+                   Today Is Friday, Ramen and Apps are 50%% Off
+                =================================================\n""");
         } else {
             System.out.printf("""
                     ========================================
@@ -417,6 +417,10 @@ public class UserInterface {
         StringBuilder toppingName = new StringBuilder();
         int counter = 0;
         StringBuilder drinkName = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd                                  HH:mm:ss");
+
+        System.out.printf("                  Ichiraku Ramen\n                 123 Ramen Street\n\n");
+        System.out.printf("%s \n", LocalDateTime.now().format(formatter));
 
         System.out.printf("====================================================\n");
 
@@ -437,7 +441,7 @@ public class UserInterface {
                 }
 
             } else if (item instanceof Appetizer) {
-                System.out.printf("1x %-40s $%.2f\n", item, item.getPrice());
+                System.out.printf("1x %-40s $%.2f\n", item, ((Appetizer) item).getBasePrice());
             } else if (item instanceof Drink) {
                 drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
                 System.out.printf("%s", drinkName);
@@ -447,7 +451,7 @@ public class UserInterface {
             toppingName.setLength(0);
         }
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
-            System.out.printf("\n\nFriday Discount Total: $%.2f\n\n", order.getOrderTotal().doubleValue());
+            System.out.printf("\n\nTotal Before Discount: $%.2f\nFriday Discount Total: $%.2f\n\n", (order.getOrderTotal().doubleValue() * 2), order.getOrderTotal().doubleValue());
         } else {
             System.out.printf("\n\nTotal: $%.2f\n\n", order.getOrderTotal().doubleValue());
         }
