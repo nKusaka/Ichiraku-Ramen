@@ -3,6 +3,7 @@ package com.pluralsight.ui;
 import com.pluralsight.models.*;
 import com.pluralsight.util.FileManager;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -287,6 +288,9 @@ public class UserInterface {
                         break;
                     case "3":
                         items.add(new Drink("water"));
+                        if (items.get(items.size() - 1) instanceof Drink) {
+                            ((Drink) items.get(items.size() - 1)).addSize(4);
+                        }
                         System.out.println("Water added to your order");
                         break;
                     case "4":
@@ -302,7 +306,7 @@ public class UserInterface {
                 }
                 order.addMenuItem(items.get(items.size() - 1));
             }
-            if (!userInput.equals("6")) {
+            if (!userInput.equals("6") && !Objects.equals(items.get(items.size() - 1).getPrice(), BigDecimal.ZERO)) {
                 userInput = getValidatedInput("""
                         ========================================
                                     Select A Drink Size
