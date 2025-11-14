@@ -37,6 +37,9 @@ public class Drink extends MenuItem {
                 size = "large";
                 price = price.add(BigDecimal.valueOf(3));
                 break;
+            case 4:
+                size = "small";
+                break;
             default:
                 break;
         }

@@ -555,6 +555,9 @@ public class UserInterface extends JFrame implements KeyListener {
         water.addActionListener(e->
         {
             items.add(new Drink("water"));
+            if (items.get(items.size() - 1) instanceof Drink) {
+                ((Drink) items.get(items.size() - 1)).addSize(4);
+            }
             order.addMenuItem(items.get(items.size() - 1));
             this.getContentPane().removeAll();
             orderDrink();
@@ -647,100 +650,97 @@ public class UserInterface extends JFrame implements KeyListener {
 
     // Shows the users order and asks them to confirm
     private void pay() {
-        StringBuilder everything = new StringBuilder();
+        StringBuilder receipt = new StringBuilder();
         LocalDate today = LocalDate.now();
-        StringBuilder ramenName = new StringBuilder();
-        StringBuilder toppingName = new StringBuilder();
-        int counter = 0;
-        StringBuilder drinkName = new StringBuilder();
+        int counter;
 
-        System.out.printf("====================================================\n");
+        receipt.append("=========== YOUR ORDER ===========\n\n");
 
         for (MenuItem item : order.getOrderList()) {
-            if (item instanceof Ramen) {
-                ramenName.append(String.format("%-43s $%.2f\n", item + " (" + ((Ramen) item).getSize() + ")", ((Ramen) item).getBasePrice()));
-                everything.append(ramenName);
 
-                if (((Ramen) item).getToppingsList().isEmpty()) {
-                    everything.append(" -No Toppings Added\n");
+            if (item instanceof Ramen ramen) {
+                receipt.append(String.format("%-43s $%.2f\n",
+                        ramen + " (" + ramen.getSize() + ")",
+                        ramen.getBasePrice()));
+
+                if (ramen.getToppingsList().isEmpty()) {
+                    receipt.append("   - No toppings added\n");
                 } else {
-                    for (String topping : ((Ramen) item).getToppingsList()) {
-                        toppingName.append(String.format(" - %-40s $%.2f\n", topping, ((Ramen) item).getToppingPrice(counter)));
-                        everything.append(toppingName);
+                    counter = 0;
+                    for (String topping : ramen.getToppingsList()) {
+                        receipt.append(String.format("   - %-40s $%.2f\n",
+                                topping, ramen.getToppingPrice(counter)));
                         counter++;
-                        toppingName.setLength(0);
                     }
                 }
+                receipt.append("\n");
 
             } else if (item instanceof Appetizer) {
-                everything.append(String.format("1x %-40s $%.2f\n", item, item.getPrice()));
-            } else if (item instanceof Drink) {
-                drinkName.append(String.format("1x %-40s $%.2f\n", item + " (" + ((Drink) item).getSize() + ")", ((Drink) item).getPrice()));
-                everything.append(drinkName);
+                receipt.append(String.format("1x %-40s $%.2f\n",
+                        item, item.getPrice()));
+
+            } else if (item instanceof Drink drink) {
+                receipt.append(String.format("1x %-40s $%.2f\n",
+                        drink + " (" + drink.getSize() + ")",
+                        drink.getPrice()));
             }
-            counter = 0;
-            ramenName.setLength(0);
-            toppingName.setLength(0);
         }
+
+        receipt.append("\n==================================\n");
+
         if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
-            everything.append(String.format(("\n\nFriday Discount Total: " + order.getOrderTotal().doubleValue())));
+            receipt.append(String.format("\nFriday Discount Total: $%.2f\n",
+                    order.getOrderTotal().doubleValue()));
         } else {
-            everything.append(String.format(("\n\nTotal: " + order.getOrderTotal().doubleValue())));
+            receipt.append(String.format("\nTotal: $%.2f\n",
+                    order.getOrderTotal().doubleValue()));
         }
 
-        // main panel everything is on
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        // ==== UI DISPLAY CODE ====
 
-        // redraw title panel
-        JLabel title = new JLabel("Your Order");
-        title.setForeground(Color.BLACK);
-        title.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        JPanel titlePanel = new JPanel();
-        titlePanel.add(title);
+        // Receipt display area
+        JTextArea orderArea = new JTextArea(receipt.toString());
+        orderArea.setFont(new Font("MS UI Gothic", Font.PLAIN, 30));
+        orderArea.setEditable(false);
+        orderArea.setOpaque(false);
 
-        // create and add buttons to panel
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 0, 0));
+        JScrollPane scrollPane = new JScrollPane(orderArea);
+        scrollPane.setBorder(null);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+
+        // Buttons
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+        JButton confirm = new JButton("Confirm");
+        JButton cancel = new JButton("Cancel Order");
 
         Font btnFont = new Font("MS UI Gothic", Font.BOLD, 40);
-
-        JButton confirm = new JButton("<html><center>Confirm");
-        JButton cancel = new JButton("<html><center>Cancel Order");
-
         confirm.setFont(btnFont);
         cancel.setFont(btnFont);
 
         buttonPanel.add(confirm);
         buttonPanel.add(cancel);
 
-        // create and add label for order
-        JLabel orderLabel = new JLabel(String.format(String.valueOf(everything)));
-        orderLabel.setForeground(Color.BLACK);
-        orderLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 50));
-        orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // add panels
-        mainPanel.add(orderLabel, BorderLayout.CENTER);
-        mainPanel.add(titlePanel,BorderLayout.NORTH);
-        mainPanel.add(Box.createVerticalStrut(10));   // spacing
+        // Add components to main panel
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.EAST);
 
+        // Display panel
         this.getContentPane().removeAll();
         this.add(mainPanel);
         this.revalidate();
         this.repaint();
 
-        confirm.addActionListener(e ->
-        {
+        // Button actions
+        confirm.addActionListener(e -> {
             fileManager.printReceipt(order);
             items.clear();
             welcomeScreen();
         });
 
-        cancel.addActionListener(e ->
-        {
+        cancel.addActionListener(e -> {
             items.clear();
             welcomeScreen();
         });
