@@ -18,7 +18,7 @@ public class UserInterface {
     private List<MenuItem> items = new ArrayList<>();
     private Order order;
     static FileManager fileManager = new FileManager();
-
+    static LocalDateTime today = LocalDateTime.now();
     // Method creates the welcome screen for the users
     public void welcomeScreen() {
 
@@ -340,13 +340,19 @@ public class UserInterface {
     // Method creates the receipt for the user displaying all items they have purchased
     // Outputs the total cost of the items purchased
     private void checkout() {
-
-        System.out.printf("""
+        if (today.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            System.out.printf("""
                 ========================================
                             Getting Total
+                  Today Is Friday Everything Is 50%% Off
                 ========================================\n""");
-
-        loadingTime();
+        } else {
+            System.out.printf("""
+                    ========================================
+                                Getting Total
+                    ========================================\n""");
+        }
+        loadingTime(3000);
 
         getOrderDetails();
         userInput = getValidatedInput("""
@@ -376,6 +382,14 @@ public class UserInterface {
     private void loadingTime() {
         try {
             Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println("Error with loading time");
+        }
+    }
+
+    private void loadingTime(int time) {
+        try {
+            Thread.sleep(time);
         } catch (Exception e) {
             System.out.println("Error with loading time");
         }
